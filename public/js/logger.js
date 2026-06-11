@@ -115,12 +115,21 @@ App.Logger = {
     const container = document.getElementById('logger-activity-type-selection');
     if (!container) return;
 
-    const catData = App.Logger.factors[category] || {};
-    container.innerHTML = Object.entries(catData).map(([type, details]) => `
-      <button class="act-type-btn" data-type="${type}" data-factor="${details.factor}" data-unit="${details.unit}" aria-label="Select ${details.label}">
-        ${details.icon} ${details.label}
-      </button>
-    `).join('');
+    const catData = Object.prototype.hasOwnProperty.call(App.Logger.factors, category)
+      ? App.Logger.factors[category]
+      : {};
+
+    container.innerHTML = '';
+    Object.entries(catData).forEach(([type, details]) => {
+      const button = document.createElement('button');
+      button.className = 'act-type-btn';
+      button.setAttribute('data-type', type);
+      button.setAttribute('data-factor', details.factor.toString());
+      button.setAttribute('data-unit', details.unit);
+      button.setAttribute('aria-label', `Select ${details.label}`);
+      button.textContent = `${details.icon} ${details.label}`;
+      container.appendChild(button);
+    });
 
     // Attach type listeners
     const buttons = container.querySelectorAll('.act-type-btn');
@@ -210,20 +219,29 @@ App.Logger = {
 
     const chipsContainer = document.getElementById('logger-comparison-chips');
     if (chipsContainer) {
-      chipsContainer.innerHTML = `
-        <div class="comparison-chip" aria-label="Absorbed by ${trees} trees in a day">
-          <span>🌳 Trees:</span> <span class="chip-val">${trees}</span>
-        </div>
-        <div class="comparison-chip" aria-label="Equal to driving a petrol car for ${km} kilometers">
-          <span>🚗 Car:</span> <span class="chip-val">${km} km</span>
-        </div>
-        <div class="comparison-chip" aria-label="Equal to charging a phone ${phone} times">
-          <span>📱 Phone:</span> <span class="chip-val">${phone}</span>
-        </div>
-        <div class="comparison-chip" aria-label="Equal to running AC for ${ac} minutes">
-          <span>❄️ AC:</span> <span class="chip-val">${ac} mins</span>
-        </div>
-      `;
+      chipsContainer.innerHTML = '';
+      const createChip = (iconText, labelText, valueText, ariaText) => {
+        const chip = document.createElement('div');
+        chip.className = 'comparison-chip';
+        chip.setAttribute('aria-label', ariaText);
+
+        const iconSpan = document.createElement('span');
+        iconSpan.textContent = iconText;
+
+        const valSpan = document.createElement('span');
+        valSpan.className = 'chip-val';
+        valSpan.textContent = valueText;
+
+        chip.appendChild(iconSpan);
+        chip.appendChild(document.createTextNode(' '));
+        chip.appendChild(valSpan);
+        return chip;
+      };
+
+      chipsContainer.appendChild(createChip('🌳 Trees:', 'Trees', trees.toString(), `Absorbed by ${trees} trees in a day`));
+      chipsContainer.appendChild(createChip('🚗 Car:', 'Car', `${km} km`, `Equal to driving a petrol car for ${km} kilometers`));
+      chipsContainer.appendChild(createChip('📱 Phone:', 'Phone', phone.toString(), `Equal to charging a phone ${phone} times`));
+      chipsContainer.appendChild(createChip('❄️ AC:', 'AC', `${ac} mins`, `Equal to running AC for ${ac} minutes`));
     }
   },
 

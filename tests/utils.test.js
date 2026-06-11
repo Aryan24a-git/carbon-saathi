@@ -491,9 +491,15 @@ describe('Rate Limiter Middleware Execution Tests', () => {
   it('triggers rate limiting error response after 20 requests', async () => {
     // Fire requests to onboarding to hit the 20 limits
     for (let i = 0; i < 20; i++) {
-      await request(app).post('/api/onboarding').send({});
+      await request(app)
+        .post('/api/onboarding')
+        .set('x-test-rate-limit', 'true')
+        .send({});
     }
-    const res = await request(app).post('/api/onboarding').send({});
+    const res = await request(app)
+      .post('/api/onboarding')
+      .set('x-test-rate-limit', 'true')
+      .send({});
     expect(res.status).toBe(429);
     expect(res.body.code).toBe('RATE_LIMIT_EXCEEDED');
   });

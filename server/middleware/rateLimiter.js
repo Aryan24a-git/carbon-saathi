@@ -13,6 +13,7 @@ const rateLimiter = rateLimit({
   max: RATE_LIMIT_MAX,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => process.env.NODE_ENV === 'test' && !req.headers['x-test-rate-limit'],
   handler: (req, res, next) => {
     const error = new AppError('Too many requests. Please try again later.', 429, 'RATE_LIMIT_EXCEEDED');
     next(error);

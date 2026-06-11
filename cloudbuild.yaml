@@ -1,0 +1,47 @@
+# Google Cloud Services:
+# - Cloud Run: serverless hosting
+# - Cloud Build: CI/CD pipeline
+# - Artifact Registry: Docker storage
+# - Generative AI API: Gemini 3 Flash
+
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t', '$_AR_REGION-docker.pkg.dev/$PROJECT_ID/$_AR_REPO/carbon-saathi:$COMMIT_SHA',
+      '.'
+    ]
+
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      '$_AR_REGION-docker.pkg.dev/$PROJECT_ID/$_AR_REPO/carbon-saathi:$COMMIT_SHA'
+    ]
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args: [
+      'run',
+      'deploy',
+      'carbon-saathi',
+      '--image', '$_AR_REGION-docker.pkg.dev/$PROJECT_ID/$_AR_REPO/carbon-saathi:$COMMIT_SHA',
+      '--region', '$_RUN_REGION',
+      '--platform', 'managed',
+      '--memory', '256Mi',
+      '--cpu', '1',
+      '--max-instances', '3',
+      '--allow-unauthenticated',
+      '--set-env-vars', 'NODE_ENV=production',
+      '--update-secrets', 'GEMINI_API_KEY=GEMINI_API_KEY:latest'
+    ]
+
+images:
+  - '$_AR_REGION-docker.pkg.dev/$PROJECT_ID/$_AR_REPO/carbon-saathi:$COMMIT_SHA'
+
+substitutions:
+  _AR_REGION: 'us-central1'
+  _AR_REPO: 'carbon-saathi-repo'
+  _RUN_REGION: 'us-central1'

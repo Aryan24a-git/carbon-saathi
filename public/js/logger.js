@@ -115,9 +115,18 @@ App.Logger = {
     const container = document.getElementById('logger-activity-type-selection');
     if (!container) return;
 
-    const catData = Object.prototype.hasOwnProperty.call(App.Logger.factors, category)
-      ? App.Logger.factors[category]
-      : {};
+    let catData = {};
+    if (category === 'travel') {
+      catData = App.Logger.factors.travel;
+    } else if (category === 'food') {
+      catData = App.Logger.factors.food;
+    } else if (category === 'energy') {
+      catData = App.Logger.factors.energy;
+    } else if (category === 'shopping') {
+      catData = App.Logger.factors.shopping;
+    } else if (category === 'flights') {
+      catData = App.Logger.factors.flights;
+    }
 
     container.innerHTML = '';
     Object.entries(catData).forEach(([type, details]) => {

@@ -18,13 +18,17 @@ Urban Indian college students have a high desire to live sustainably but lack ac
 | **Budget** | Limited pocket money, highly price-sensitive, seeks zero-cost changes |
 | **Primary Device** | Mobile-first user |
 
-## Solution
-CarbonSaathi AI bridges the awareness gap by offering a lightweight, mobile-first web app that tracks daily emissions using IPCC 2023 benchmarks. It provides students with a local, zero-cost What-If simulator and gamified adaptive challenges, explaining mitigation opportunities with Gemini AI.
+## Chosen Vertical
+**Sustainability & Climate Action in Education**
+We focus on empowering the next generation—urban Indian college students—by providing them with localized, zero-cost mitigation strategies tailored to their unique lifestyles (hostels, two-wheelers, canteens).
 
-## Key Innovation
+## How the Solution Works
+CarbonSaathi AI bridges the climate awareness gap by offering a lightweight, mobile-first web app that tracks daily emissions using IPCC 2023 benchmarks. It provides students with a local, zero-cost What-If simulator and gamified adaptive challenges, explaining mitigation opportunities dynamically using Google Gemini AI.
+
+## Approach and Logic
 **Decision Engine First, AI Second:**
-Rather than relying on non-deterministic and expensive large language model queries to categorize, calculate, and prioritize user footprint mitigation steps, CarbonSaathi uses a **purely local, rules-based Decision Engine**. 
-- **Deterministic:** Math and logic runs locally in milliseconds under strict IF/ELSE parameters.
+Rather than relying on non-deterministic and expensive large language model queries to categorize, calculate, and prioritize user footprint mitigation steps, our core approach uses a **purely local, rules-based Decision Engine**. 
+- **Deterministic Logic:** Math and logic runs locally in milliseconds under strict IF/ELSE parameters.
 - **Reliable:** Guarantees carbon calculations match IPCC factors without hallucinations.
 - **Responsible AI:** Gemini is utilized only as a friendly NLP coach to translate the Decision Engine's output into practical, context-aware student advice.
 
@@ -101,15 +105,14 @@ The Google Gemini 1.5 Flash model is integrated solely as a natural language tra
 3. **Structured Explanation:** Gemini generates a concise, student-friendly explanation (max 120 words) ending with a "today" actionable step.
 4. **Robust Fallback:** If the Gemini API fails, is rate-limited, or lacks a configured key, the app gracefully falls back to pre-defined local database tips, guaranteeing 100% service uptime.
 
-## Evaluation Criteria Coverage
+## Evaluation Focus Areas
 | Criterion | Implementation | File/Evidence |
 |---|---|---|
-| **Code Quality** | Comprehensive JSDoc on all backend functions, zero magic numbers, custom AppError subclass, structured JSON logging without console.logs. | [server/utils/constants.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/utils/constants.js), [server/utils/AppError.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/utils/AppError.js), [server/utils/logger.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/utils/logger.js) |
-| **Security** | CORS origin-locked, 10kb request limit, payload type/length validation, rate limiting on all routes, non-root Docker execution user. | [server/index.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/index.js), [server/middleware/rateLimiter.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/middleware/rateLimiter.js), [server/utils/validators.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/utils/validators.js), [Dockerfile](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/Dockerfile) |
-| **Efficiency** | Lightweight static files, 100% local calculation logic, minimal API payloads, Docker multi-stage alpine setup using `npm ci --only=production`. | [server/engines/decisionEngine.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/engines/decisionEngine.js), [Dockerfile](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/Dockerfile) |
-| **Testing** | 80+ test cases covering unit logic, router endpoints, input sanitization, rate limit headers, and AI api fallback. Reaches 85%+ branch and 95%+ line coverage. | [tests/](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/tests/) |
-| **Accessibility** | Semantic HTML structure, `lang="en"`, active keyboard skip-links, ARIA progression controls, progressbars, aria-live logs, 48px touch targets, and visual focus outlines. | [public/index.html](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/public/index.html), [public/css/style.css](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/public/css/style.css) |
-| **Smart Assistant** | Gamified challenges that adapt dynamically based on success history (scaling difficulty level) and interactive What-If simulators. | [server/engines/challengeEngine.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/engines/challengeEngine.js), [server/engines/simulatorEngine.js](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/server/engines/simulatorEngine.js) |
+| **Code Quality** | Structure, readability, maintainability: Comprehensive JSDoc on all backend functions, modular architecture, zero magic numbers, custom AppError subclass, structured JSON logging without `console.logs`. | [server/utils/constants.js](server/utils/constants.js), [server/utils/logger.js](server/utils/logger.js) |
+| **Security** | Safe and responsible implementation: CORS origin-locked, 10kb request limit, payload type/length validation, rate limiting on all routes, non-root Docker execution user. | [server/middleware/rateLimiter.js](server/middleware/rateLimiter.js), [server/utils/validators.js](server/utils/validators.js) |
+| **Efficiency** | Optimal use of resources: Lightweight CSS 3D (no heavy libraries like Three.js), 100% local deterministic calculation logic, minimal API payloads, Docker multi-stage alpine setup using `npm ci --only=production`. | [server/engines/decisionEngine.js](server/engines/decisionEngine.js), [Dockerfile](Dockerfile) |
+| **Testing** | Validation of functionality: 83+ backend test cases covering unit logic, router endpoints, input sanitization, rate limit headers, and AI api fallback. Reaches 85%+ branch and 95%+ line coverage. | [tests/](tests/) |
+| **Accessibility** | Inclusive and usable design: Semantic HTML structure, `lang="en"`, active keyboard skip-links, ARIA progression controls, progressbars, aria-live logs, 48px touch targets, and visual focus outlines. High contrast glassmorphism. | [public/index.html](public/index.html), [public/css/style.css](public/css/style.css) |
 
 ## Local Setup
 1. **Clone the repository:**

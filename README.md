@@ -164,6 +164,9 @@ Here is a preview of the redesigned CarbonSaathi AI web interface featuring prem
 ### 4. What-If Lifestyle Simulator
 ![CarbonSaathi What-If Simulator](public/assets/screenshots/simulator.png)
 
+### 5. AI Climate Coach (Insights)
+![CarbonSaathi AI Climate Coach](public/assets/screenshots/insights.png)
+
 ## Assumptions
 - **Emission Factors:** Based on average IPCC 2023 values localized to Indian conditions.
 - **Indian Electricity Grid:** Utility grid intensity assumed at `0.82 kg CO2/kWh` based on India's coal-heavy energy mix.

@@ -14,10 +14,10 @@ const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
 
 const insightModel = genAI
   ? genAI.getGenerativeModel({
-      model: 'gemini-2.5-flash',
-      systemInstruction: 'You are CarbonSaathi, a friendly and practical climate coach assisting urban Indian college students to understand and reduce their carbon footprint.',
+      model: 'gemini-2.5-flash-lite',
+      systemInstruction: 'You are CarbonSaathi, a precise and direct climate coach assisting urban Indian college students to understand and reduce their carbon footprint.',
       generationConfig: {
-        maxOutputTokens: 1000,
+        maxOutputTokens: 250,
         temperature: 0.7
       }
     })

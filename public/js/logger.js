@@ -128,7 +128,7 @@ App.Logger = {
       catData = App.Logger.factors.flights;
     }
 
-    container.innerHTML = '';
+    container.textContent = '';
     Object.entries(catData).forEach(([type, details]) => {
       const button = document.createElement('button');
       button.className = 'act-type-btn';
@@ -228,7 +228,7 @@ App.Logger = {
 
     const chipsContainer = document.getElementById('logger-comparison-chips');
     if (chipsContainer) {
-      chipsContainer.innerHTML = '';
+      chipsContainer.textContent = '';
       const createChip = (iconText, labelText, valueText, ariaText) => {
         const chip = document.createElement('div');
         chip.className = 'comparison-chip';

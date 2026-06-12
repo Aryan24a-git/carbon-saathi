@@ -43,11 +43,11 @@ App.Insights = {
     const indicator = document.createElement('div');
     indicator.id = 'insights-typing';
     indicator.className = 'typing-indicator';
-    indicator.innerHTML = `
+    indicator.innerHTML = DOMPurify.sanitize(`
       <span class="typing-dot"></span>
       <span class="typing-dot"></span>
       <span class="typing-dot"></span>
-    `;
+    `);
     App.Insights.chatWindow?.appendChild(indicator);
     App.Insights.scrollToBottom();
   },
@@ -118,7 +118,7 @@ App.Insights = {
       const phone = Math.round(decision.estimatedSavingKg / 0.005);
       const ac = Math.round(decision.estimatedSavingKg / 0.021);
 
-      bubble.innerHTML = `
+      bubble.innerHTML = DOMPurify.sanitize(`
         <div class="bubble-content">
           <div class="mitigation-content" style="margin-bottom: 12px; border-left-color: var(--primary);">
             <div class="mitigation-title">COACH DIAGNOSTIC: ${decision.category.toUpperCase()}</div>
@@ -141,7 +141,7 @@ App.Insights = {
             </div>
           </div>
         </div>
-      `;
+      `);
 
       App.Insights.chatWindow?.appendChild(bubble);
       App.Insights.scrollToBottom();
@@ -169,7 +169,7 @@ App.Insights = {
     // Append User Bubble
     const userBubble = document.createElement('div');
     userBubble.className = 'chat-bubble user-bubble';
-    userBubble.innerHTML = `<p>${userMessage}</p>`;
+    userBubble.innerHTML = DOMPurify.sanitize(`<p>${userMessage}</p>`);
     App.Insights.chatWindow?.appendChild(userBubble);
     App.Insights.scrollToBottom();
 
@@ -198,7 +198,7 @@ App.Insights = {
 
       const coachBubble = document.createElement('div');
       coachBubble.className = 'chat-bubble coach-bubble';
-      coachBubble.innerHTML = `<p>${result.explanation}</p>`;
+      coachBubble.innerHTML = DOMPurify.sanitize(`<p>${result.explanation}</p>`);
 
       App.Insights.chatWindow?.appendChild(coachBubble);
       App.Insights.scrollToBottom();

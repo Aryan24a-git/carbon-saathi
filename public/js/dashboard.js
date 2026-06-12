@@ -37,13 +37,13 @@ App.Dashboard = {
 
     if (App.state.activities.length === 0) {
       if (mitigationContainer) {
-        mitigationContainer.innerHTML = `<p class="muted-text">No activities logged today. Start logging in the Log tab to see your mitigation suggestions!</p>`;
+        mitigationContainer.innerHTML = DOMPurify.sanitize(`<p class="muted-text">No activities logged today. Start logging in the Log tab to see your mitigation suggestions!</p>`);
       }
       if (insightsBtn) {
         insightsBtn.classList.add('hidden');
       }
       if (chartContainer) {
-        chartContainer.innerHTML = '<p class="muted-text">No emissions recorded yet.</p>';
+        chartContainer.innerHTML = DOMPurify.sanitize('<p class="muted-text">No emissions recorded yet.</p>');
       }
       return;
     }
@@ -80,7 +80,7 @@ App.Dashboard = {
       // Render mitigation decision card
       if (mitigationContainer && result.decision) {
         const d = result.decision;
-        mitigationContainer.innerHTML = `
+        mitigationContainer.innerHTML = DOMPurify.sanitize(`
           <div class="mitigation-title">Dominant Category: ${d.category.toUpperCase()} (${(d.percentage * 100).toFixed(0)}%)</div>
           <div class="mitigation-action">👉 ${d.action}</div>
           <div class="mitigation-reason">${d.reasoning}</div>
@@ -94,7 +94,7 @@ App.Dashboard = {
               <span class="chip-val">${d.treeEquivalent} tree-days</span>
             </div>
           </div>
-        `;
+        `);
       }
 
       // Render horizontal category bar chart
@@ -112,7 +112,7 @@ App.Dashboard = {
         });
 
         const maxVal = Math.max(...Object.values(sums), 1);
-        chartContainer.innerHTML = Object.entries(sums).map(([cat, val]) => {
+        chartContainer.innerHTML = DOMPurify.sanitize(Object.entries(sums).map(([cat, val]) => {
           const widthPercent = (val / maxVal) * 100;
           return `
             <div class="chart-bar-item">
@@ -125,7 +125,7 @@ App.Dashboard = {
               </div>
             </div>
           `;
-        }).join('');
+        }).join(''));
       }
 
     } catch (err) {

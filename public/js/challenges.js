@@ -15,7 +15,7 @@ App.Challenges = {
     const container = document.getElementById('challenges-display-container');
     if (!container) return;
 
-    container.innerHTML = '<p class="muted-text">Loading your weekly challenge...</p>';
+    container.innerHTML = DOMPurify.sanitize('<p class="muted-text">Loading your weekly challenge...</p>');
 
     try {
       const profileStr = encodeURIComponent(JSON.stringify(App.state.profile || {}));
@@ -38,7 +38,7 @@ App.Challenges = {
 
       App.Challenges.renderChallenge(result);
     } catch (err) {
-      container.innerHTML = `<p class="muted-text">Offline Mode: Active challenges temporarily unavailable.</p>`;
+      container.innerHTML = DOMPurify.sanitize(`<p class="muted-text">Offline Mode: Active challenges temporarily unavailable.</p>`);
     }
   },
 
@@ -54,7 +54,7 @@ App.Challenges = {
     const c = data.challenge;
     const end = new Date(data.endDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 
-    container.innerHTML = `
+    container.innerHTML = DOMPurify.sanitize(`
       <div class="challenge-card-item" id="challenge-card-${c.id}">
         <div class="challenge-title-row">
           <span class="cat-icon" style="font-size: 1.5rem;">${c.icon}</span>
@@ -77,7 +77,7 @@ App.Challenges = {
           <button class="btn btn-secondary" onclick="App.Challenges.markFailed('${c.id}')" aria-label="Mark challenge ${c.title} as failed">Skip / Fail</button>
         </div>
       </div>
-    `;
+    `);
   },
 
   /**

@@ -24,7 +24,16 @@ const AppError = require('./utils/AppError');
 
 const app = express();
 
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:"]
+    }
+  }
+}));
 app.use(compression());
 
 app.set('trust proxy', 1);
@@ -36,7 +45,7 @@ app.use(cors({
 }));
 
 app.use(express.json({ limit: '10kb' }));
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../public'), { maxAge: '1d' }));
 
 app.use('/api', rateLimiter);
 

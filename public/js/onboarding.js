@@ -105,7 +105,7 @@ App.Onboarding = {
     });
 
     // Generate HTML for step
-    container.innerHTML = `
+    container.innerHTML = DOMPurify.sanitize(`
       <div class="question-block">
         <h4 class="question-text">${currentQuestion.text}</h4>
         <div class="options-list">
@@ -116,7 +116,7 @@ App.Onboarding = {
           `).join('')}
         </div>
       </div>
-    `;
+    `);
 
     // Attach option listeners
     const buttons = container.querySelectorAll('.option-btn');

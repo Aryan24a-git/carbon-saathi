@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="CarbonSaathi AI — Premium Carbon Footprint Tracker. Track, reduce, and gamify your daily carbon emissions with AI-powered insights.">
+  <meta name="theme-color" content="#0a1a14">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="CarbonSaathi | Breathe easier. Track lighter.">
+  <meta property="og:description" content="Premium Carbon Footprint Tracker for Urban Indian College Students.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://carbon-saathi-158783670898.us-central1.run.app">
+  <link rel="canonical" href="https://carbon-saathi-158783670898.us-central1.run.app">
   <title>CarbonSaathi | Breathe easier. Track lighter.</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
   <link rel="stylesheet" href="css/style.css">
@@ -25,7 +32,7 @@
     <!-- Top Navigation -->
     <nav id="main-nav" class="main-nav hidden" role="navigation" aria-label="Main navigation">
       <div class="nav-brand">
-        <span class="nav-brand-icon">🌱</span>
+        <span class="nav-brand-icon" aria-hidden="true">🌱</span>
         <span>CarbonSaathi</span>
       </div>
       <ul class="nav-links">
@@ -44,7 +51,7 @@
       <section id="page-onboarding" class="page active">
         <div class="onboarding-container">
           <div class="onboarding-header">
-            <div class="onboarding-icon">🌱</div>
+            <div class="onboarding-icon" aria-hidden="true">🌱</div>
             <h1>Start Your Green Journey</h1>
             <p class="muted-text">Tell us about your lifestyle to establish your carbon baseline.</p>
           </div>
@@ -87,7 +94,8 @@
               <div class="garden-display">
                 <div class="garden-scene" id="garden-scene" data-level="1" aria-label="Virtual garden at seedling level">
                   <div class="garden-world">
-                    <svg class="garden-plant" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="garden-plant" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="garden-plant-title">
+                      <title id="garden-plant-title">Virtual Garden Plant</title>
                       <!-- Glow -->
                       <circle cx="60" cy="135" r="35" fill="url(#gardenGlow)" class="garden-glow-circle"/>
                       <!-- Pot -->
@@ -126,7 +134,7 @@
                   </div>
                 </div>
                 <div class="garden-status">
-                  <span class="garden-status-icon">🪴</span>
+                  <span class="garden-status-icon" aria-hidden="true">🪴</span>
                   <div style="text-align: left;">
                     <div id="garden-level" class="garden-level">Level 1: Seedling</div>
                     <div id="garden-offset" class="garden-offset">0 kg CO₂ Offset</div>
@@ -160,14 +168,14 @@
             </div>
             <div class="mini-stats-grid">
               <div class="mini-stat">
-                <div class="mini-stat-icon">🔥</div>
+                <div class="mini-stat-icon" aria-hidden="true">🔥</div>
                 <div class="mini-stat-info">
                   <span class="mini-stat-title">Streak</span>
                   <span id="stat-streak-val" class="mini-stat-val">0 days</span>
                 </div>
               </div>
               <div class="mini-stat">
-                <div class="mini-stat-icon">📝</div>
+                <div class="mini-stat-icon" aria-hidden="true">📝</div>
                 <div class="mini-stat-info">
                   <span class="mini-stat-title">Logged</span>
                   <span id="stat-logs-val" class="mini-stat-val">0 items</span>
@@ -226,23 +234,23 @@
 
           <div id="logger-category-grid" class="activity-category-grid">
             <button class="category-card" data-category="travel">
-              <span class="cat-icon">🚇</span>
+              <span class="cat-icon" aria-hidden="true">🚇</span>
               <span class="cat-label">Travel</span>
             </button>
             <button class="category-card" data-category="food">
-              <span class="cat-icon">🥗</span>
+              <span class="cat-icon" aria-hidden="true">🥗</span>
               <span class="cat-label">Food</span>
             </button>
             <button class="category-card" data-category="energy">
-              <span class="cat-icon">⚡</span>
+              <span class="cat-icon" aria-hidden="true">⚡</span>
               <span class="cat-label">Energy</span>
             </button>
             <button class="category-card" data-category="shopping">
-              <span class="cat-icon">🛍️</span>
+              <span class="cat-icon" aria-hidden="true">🛍️</span>
               <span class="cat-label">Shopping</span>
             </button>
             <button class="category-card" data-category="flights">
-              <span class="cat-icon">✈️</span>
+              <span class="cat-icon" aria-hidden="true">✈️</span>
               <span class="cat-label">Flights</span>
             </button>
           </div>
@@ -297,7 +305,7 @@
 
           <form id="insights-chat-form" class="insights-chat-form">
             <div class="input-group">
-              <input type="text" id="insights-user-input" placeholder="Ask follow-up questions..." required>
+              <input type="text" id="insights-user-input" aria-label="Message for AI Coach" placeholder="Ask follow-up questions..." required>
               <button type="submit" id="insights-send-btn" class="btn-send">➤</button>
             </div>
           </form>
@@ -328,19 +336,19 @@
 
           <div id="simulator-scenarios" class="simulator-scenarios-grid">
             <button class="simulator-scenario-btn" data-scenario="switch_transport">
-              <span class="sim-icon">🚇</span>
+              <span class="sim-icon" aria-hidden="true">🚇</span>
               <span class="sim-label">Public Transport</span>
             </button>
             <button class="simulator-scenario-btn" data-scenario="reduce_meat">
-              <span class="sim-icon">🥗</span>
+              <span class="sim-icon" aria-hidden="true">🥗</span>
               <span class="sim-label">Meatless Days</span>
             </button>
             <button class="simulator-scenario-btn" data-scenario="reduce_ac">
-              <span class="sim-icon">❄️</span>
+              <span class="sim-icon" aria-hidden="true">❄️</span>
               <span class="sim-label">Reduce AC</span>
             </button>
             <button class="simulator-scenario-btn" data-scenario="cycle_instead">
-              <span class="sim-icon">🚲</span>
+              <span class="sim-icon" aria-hidden="true">🚲</span>
               <span class="sim-label">Cycle Instead</span>
             </button>
           </div>
@@ -376,12 +384,13 @@
     </main>
   </div>
 
-  <script src="js/app.js"></script>
-  <script src="js/onboarding.js"></script>
-  <script src="js/dashboard.js"></script>
-  <script src="js/logger.js"></script>
-  <script src="js/insights.js"></script>
-  <script src="js/challenges.js"></script>
-  <script src="js/simulator.js"></script>
+  <script src="js/dompurify.min.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/onboarding.js" defer></script>
+  <script src="js/dashboard.js" defer></script>
+  <script src="js/logger.js" defer></script>
+  <script src="js/insights.js" defer></script>
+  <script src="js/challenges.js" defer></script>
+  <script src="js/simulator.js" defer></script>
 </body>
 </html>

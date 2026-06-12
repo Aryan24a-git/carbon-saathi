@@ -88,7 +88,7 @@ App.Simulator = {
       // Render equivalents comparison chips
       const chips = document.getElementById('sim-comparison-chips');
       if (chips) {
-        chips.innerHTML = `
+        chips.innerHTML = DOMPurify.sanitize(`
           <div class="comparison-chip" aria-label="🌳 ${r.equivalents.treesPlanted} Trees planted equivalent">
             <span>🌳 Trees:</span> <span class="chip-val">${r.equivalents.treesPlanted} planted/yr</span>
           </div>
@@ -101,7 +101,7 @@ App.Simulator = {
           <div class="comparison-chip" aria-label="❄️ ${r.equivalents.flightHoursAvoided} Flight hours avoided">
             <span>🌍 Flight equivalent:</span> <span class="chip-val">-${r.equivalents.flightHoursAvoided} hrs/yr</span>
           </div>
-        `;
+        `);
       }
 
       App.Toast.show(`Simulation ran! Saved ${r.savedKgPerMonth.toFixed(1)} kg CO₂/month`, 'success');

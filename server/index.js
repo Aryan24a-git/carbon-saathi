@@ -9,6 +9,8 @@ if(process.env.NODE_ENV!=='production') require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const helmet = require('helmet');
+const compression = require('compression');
 
 const calculateRouter = require('./routes/calculate');
 const insightsRouter = require('./routes/insights');
@@ -21,6 +23,9 @@ const logger = require('./utils/logger');
 const AppError = require('./utils/AppError');
 
 const app = express();
+
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(compression());
 
 app.set('trust proxy', 1);
 

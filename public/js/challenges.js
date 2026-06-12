@@ -74,7 +74,7 @@ App.Challenges = {
 
         <div class="challenge-actions">
           <button class="btn btn-primary" onclick="App.Challenges.markComplete('${c.id}')" aria-label="Mark challenge ${c.title} as completed">Mark Complete</button>
-          <button class="btn" style="background-color: var(--surface); border: 1px solid var(--border); color: var(--text);" onclick="App.Challenges.markFailed('${c.id}')" aria-label="Mark challenge ${c.title} as failed">Skip / Failed</button>
+          <button class="btn btn-secondary" onclick="App.Challenges.markFailed('${c.id}')" aria-label="Mark challenge ${c.title} as failed">Skip / Fail</button>
         </div>
       </div>
     `;

@@ -33,13 +33,6 @@ App.Insights = {
         }
       };
     }
-
-    // Toggle chat form visibility based on activity logs
-    if (App.state.activities.length > 0 && App.Insights.chatForm) {
-      App.Insights.chatForm.classList.remove('hidden');
-    } else if (App.Insights.chatForm) {
-      App.Insights.chatForm.classList.add('hidden');
-    }
   },
 
   /**

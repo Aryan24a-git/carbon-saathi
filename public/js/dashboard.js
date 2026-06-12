@@ -21,6 +21,9 @@ App.Dashboard = {
       logsElement.textContent = `${App.state.activities.length} item${App.state.activities.length === 1 ? '' : 's'}`;
     }
 
+    // Update CSS Virtual Garden
+    App.Dashboard.updateGarden();
+
     // Update ring value immediately
     const carbonValElement = document.getElementById('ring-carbon-val');
     if (carbonValElement) {
@@ -148,13 +151,56 @@ App.Dashboard = {
     // Apply animation offset
     fill.style.strokeDashoffset = dashoffset;
 
-    // Assign color coding
+    // Assign color coding (Using the new Glass/Claymorphism theme)
     if (percentage < 50) {
       fill.style.stroke = 'var(--success)';
+      fill.style.filter = 'drop-shadow(0 0 10px rgba(46, 213, 115, 0.4))';
     } else if (percentage <= 80) {
-      fill.style.stroke = 'var(--accent)';
+      fill.style.stroke = 'var(--primary)';
+      fill.style.filter = 'drop-shadow(0 0 15px var(--primary-glow))';
     } else {
       fill.style.stroke = 'var(--danger)';
+      fill.style.filter = 'drop-shadow(0 0 10px rgba(255, 71, 87, 0.4))';
+    }
+  },
+
+  /**
+   * Updates the CSS Virtual Garden plant growth based on user activity.
+   * Controls SVG stem height, leaf visibility, and level text via data attributes.
+   * @returns {void}
+   */
+  updateGarden() {
+    const activities = App.state.activities.length;
+    const totalEmissions = App.state.totalToday;
+    const budget = 11.5;
+
+    let level = 1;
+    let levelName = 'Seedling';
+
+    if (activities >= 12 && totalEmissions < budget * 0.5) {
+      level = 5; levelName = 'Forest Guardian';
+    } else if (activities >= 8) {
+      level = 4; levelName = 'Fern Canopy';
+    } else if (activities >= 4) {
+      level = 3; levelName = 'Young Plant';
+    } else if (activities >= 1) {
+      level = 2; levelName = 'Sprout';
+    }
+
+    const scene = document.getElementById('garden-scene');
+    const levelEl = document.getElementById('garden-level');
+    const offsetEl = document.getElementById('garden-offset');
+
+    if (scene) {
+      scene.setAttribute('data-level', level);
+      scene.setAttribute('aria-label', `Virtual garden at ${levelName} level`);
+    }
+    if (levelEl) {
+      levelEl.textContent = `Level ${level}: ${levelName}`;
+    }
+    if (offsetEl) {
+      const offset = (activities * 0.8).toFixed(1);
+      offsetEl.textContent = `${offset} kg CO\u2082 Offset`;
     }
   }
 };

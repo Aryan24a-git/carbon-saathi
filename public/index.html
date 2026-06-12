@@ -3,74 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CarbonSaathi AI - Small Actions. Lasting Impact. A personal carbon footprint tracker designed for urban Indian college students to track, simulate, and reduce emissions.">
-  <title>CarbonSaathi AI - Small Actions. Lasting Impact.</title>
+  <meta name="description" content="CarbonSaathi AI — Premium Carbon Footprint Tracker. Track, reduce, and gamify your daily carbon emissions with AI-powered insights.">
+  <title>CarbonSaathi | Breathe easier. Track lighter.</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Skip navigation link for screen readers -->
+  <!-- Ambient Background System -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
   <a href="#main-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
 
-  <!-- Top Navigation Bar -->
-  <nav id="main-nav" class="main-nav hidden" role="navigation" aria-label="Main navigation">
-    <div class="nav-container">
-      <div class="nav-logo" aria-label="CarbonSaathi Logo">🌱 CarbonSaathi</div>
-      <ul class="nav-links">
-        <li><button class="nav-btn active" data-page="dashboard" aria-label="Go to Dashboard">Dashboard</button></li>
-        <li><button class="nav-btn" data-page="logger" aria-label="Go to Log Activity">Log</button></li>
-        <li><button class="nav-btn" data-page="insights" aria-label="Go to AI Insights">Insights</button></li>
-        <li><button class="nav-btn" data-page="challenges" aria-label="Go to Weekly Challenges">Challenges</button></li>
-        <li><button class="nav-btn" data-page="simulator" aria-label="Go to What-If Simulator">Simulator</button></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Accessibility Toast Live Region -->
+  <!-- Toast Container -->
   <div id="toast-container" class="toast-container" role="log" aria-live="polite"></div>
 
-  <!-- Main Content Area -->
-  <main id="main-content" role="main">
-    <div class="app-container">
-      
-      <!-- ONBOARDING PAGE -->
+  <div class="app-layout">
+    <!-- Top Navigation -->
+    <nav id="main-nav" class="main-nav hidden" role="navigation" aria-label="Main navigation">
+      <div class="nav-brand">
+        <span class="nav-brand-icon">🌱</span>
+        <span>CarbonSaathi</span>
+      </div>
+      <ul class="nav-links">
+        <li><button class="nav-btn active" data-page="dashboard">Dashboard</button></li>
+        <li><button class="nav-btn" data-page="logger">Logger</button></li>
+        <li><button class="nav-btn" data-page="insights">Insights</button></li>
+        <li><button class="nav-btn" data-page="challenges">Challenges</button></li>
+        <li><button class="nav-btn" data-page="simulator">Simulator</button></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content" role="main">
+
+      <!-- ═══ ONBOARDING PAGE ═══ -->
       <section id="page-onboarding" class="page active">
-        <div class="onboarding-card">
+        <div class="onboarding-container">
           <div class="onboarding-header">
-            <h2>Start Your Green Journey</h2>
-            <p class="tagline">Small Actions. Lasting Impact.</p>
-          </div>
-          
-          <div class="progress-bar-container">
-            <div id="onboarding-progress-indicator" class="onboarding-progress-indicator" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" aria-label="Onboarding Progress"></div>
-          </div>
-          <div class="progress-dots" id="onboarding-dots" aria-hidden="true">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+            <div class="onboarding-icon">🌱</div>
+            <h1>Start Your Green Journey</h1>
+            <p class="muted-text">Tell us about your lifestyle to establish your carbon baseline.</p>
           </div>
 
-          <div id="onboarding-questions-container" class="questions-container">
-            <!-- Questions will be injected here dynamically by onboarding.js -->
+          <div class="glass-card onboarding-card">
+            <div class="progress-bar-track">
+              <div id="onboarding-progress-indicator" class="progress-bar-fill" style="width: 20%;" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <div class="progress-dots" id="onboarding-dots">
+              <span class="dot active"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+
+            <div id="onboarding-questions-container" class="questions-container">
+              <!-- Injected dynamically by onboarding.js -->
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- DASHBOARD PAGE -->
+      <!-- ═══ DASHBOARD PAGE ═══ -->
       <section id="page-dashboard" class="page">
+        <!-- Hero Section -->
+        <div class="dashboard-hero">
+          <div class="hero-text">
+            <h1>Breathe easier.<br>Track lighter.</h1>
+            <p class="muted-text" style="font-size: 1.1rem; margin-bottom: 24px;">Your personal AI climate coach is active. Log your daily actions to see real-time impact.</p>
+            <button class="btn btn-glow" onclick="App.showPage('logger')">Log Activity</button>
+          </div>
+          <div class="hero-image">
+            <!-- Virtual Garden Card (CSS 3D — No Three.js) -->
+            <div class="glass-card garden-card">
+              <div class="card-header" style="justify-content: center;">
+                <h3>My Virtual Garden</h3>
+              </div>
+              <div class="garden-display">
+                <div class="garden-scene" id="garden-scene" data-level="1" aria-label="Virtual garden at seedling level">
+                  <div class="garden-world">
+                    <svg class="garden-plant" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <!-- Glow -->
+                      <circle cx="60" cy="135" r="35" fill="url(#gardenGlow)" class="garden-glow-circle"/>
+                      <!-- Pot -->
+                      <path d="M42 138 L78 138 L74 152 Q60 158 46 152 Z" fill="#1a3d2e" stroke="rgba(0,255,178,0.15)" stroke-width="0.5"/>
+                      <ellipse cx="60" cy="138" rx="20" ry="4" fill="#224a3a"/>
+                      <!-- Stem -->
+                      <line x1="60" y1="134" x2="60" y2="45" stroke="url(#stemGrad)" stroke-width="3" stroke-linecap="round" class="stem" pathLength="1"/>
+                      <!-- Leaves -->
+                      <path d="M60 105 Q42 88 32 100 Q42 106 60 105" fill="url(#leafGrad)" class="garden-leaf leaf-l1"/>
+                      <path d="M60 90 Q78 73 88 85 Q78 91 60 90" fill="url(#leafGrad)" class="garden-leaf leaf-r1"/>
+                      <path d="M60 75 Q42 58 32 70 Q42 76 60 75" fill="url(#leafGrad)" class="garden-leaf leaf-l2"/>
+                      <path d="M60 60 Q78 43 88 55 Q78 61 60 60" fill="url(#leafGrad)" class="garden-leaf leaf-r2"/>
+                      <!-- Top Bud -->
+                      <circle cx="60" cy="42" r="5" fill="#00FFB2" class="garden-bud"/>
+                      <circle cx="60" cy="42" r="9" fill="none" stroke="rgba(0,255,178,0.3)" stroke-width="1" class="garden-bud-ring"/>
+                      <!-- Gradients -->
+                      <defs>
+                        <linearGradient id="stemGrad" x1="0" y1="1" x2="0" y2="0">
+                          <stop offset="0%" stop-color="#1a5a3a"/>
+                          <stop offset="100%" stop-color="#00FFB2"/>
+                        </linearGradient>
+                        <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#00FFB2"/>
+                          <stop offset="100%" stop-color="#00A67E"/>
+                        </linearGradient>
+                        <radialGradient id="gardenGlow">
+                          <stop offset="0%" stop-color="rgba(0,255,178,0.12)"/>
+                          <stop offset="100%" stop-color="rgba(0,255,178,0)"/>
+                        </radialGradient>
+                      </defs>
+                    </svg>
+                    <!-- Fireflies -->
+                    <div class="firefly" style="--x:25px;--y:-35px;--d:7s;--delay:0s; top:30%; left:15%;"></div>
+                    <div class="firefly" style="--x:-18px;--y:-45px;--d:9s;--delay:2s; top:50%; right:10%;"></div>
+                    <div class="firefly" style="--x:15px;--y:-20px;--d:6s;--delay:4s; top:20%; left:60%;"></div>
+                  </div>
+                </div>
+                <div class="garden-status">
+                  <span class="garden-status-icon">🪴</span>
+                  <div style="text-align: left;">
+                    <div id="garden-level" class="garden-level">Level 1: Seedling</div>
+                    <div id="garden-offset" class="garden-offset">0 kg CO₂ Offset</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid -->
         <div class="dashboard-grid">
-          <!-- Carbon Ring Card -->
-          <div class="card card-ring">
-            <h3>Daily Carbon Budget</h3>
+
+          <!-- Carbon Analytics Ring -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h3>Carbon Analytics</h3>
+              <span class="card-subtitle">Today vs Budget</span>
+            </div>
             <div class="ring-container">
               <div class="score-ring-wrapper">
-                <svg class="score-ring" width="200" height="200" viewBox="0 0 200 200">
+                <svg class="score-ring" viewBox="0 0 200 200">
                   <circle class="ring-bg" cx="100" cy="100" r="80"></circle>
-                  <circle id="score-ring-fill" class="ring-fill" cx="100" cy="100" r="80" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Carbon Usage Ring"></circle>
+                  <circle id="score-ring-fill" class="ring-fill" cx="100" cy="100" r="80" role="progressbar"></circle>
                 </svg>
                 <div class="ring-text">
                   <span id="ring-carbon-val">0.0</span>
@@ -78,227 +157,224 @@
                 </div>
               </div>
             </div>
-            <p class="ring-caption">Today's Total vs Indian Student Avg (11.5 kg)</p>
-          </div>
-
-          <!-- Quick Stats -->
-          <div class="card card-stats">
-            <div class="stat-item">
-              <span class="stat-icon">🔥</span>
-              <div class="stat-info">
-                <span class="stat-title">Daily Streak</span>
-                <span id="stat-streak-val" class="stat-val">0 days</span>
+            <div class="mini-stats-grid">
+              <div class="mini-stat">
+                <div class="mini-stat-icon">🔥</div>
+                <div class="mini-stat-info">
+                  <span class="mini-stat-title">Streak</span>
+                  <span id="stat-streak-val" class="mini-stat-val">0 days</span>
+                </div>
               </div>
-            </div>
-            <div class="stat-item">
-              <span class="stat-icon">📝</span>
-              <div class="stat-info">
-                <span class="stat-title">Logged Today</span>
-                <span id="stat-logs-val" class="stat-val">0 items</span>
+              <div class="mini-stat">
+                <div class="mini-stat-icon">📝</div>
+                <div class="mini-stat-info">
+                  <span class="mini-stat-title">Logged</span>
+                  <span id="stat-logs-val" class="mini-stat-val">0 items</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Highest Impact Recommendations -->
-          <div class="card card-recommendations">
-            <h3>Key Mitigation Area</h3>
-            <div id="dashboard-mitigation-content" class="mitigation-content">
-              <p class="muted-text">Complete onboarding and log activities to reveal your highest impact areas.</p>
+          <!-- Mitigation Focus -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h3>Mitigation Focus</h3>
             </div>
-            <div class="dashboard-actions">
-              <button id="dashboard-insights-btn" class="btn btn-primary hidden" aria-label="Get AI Insights on your footprint">Get AI Insights</button>
+            <div id="dashboard-mitigation-content" style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+              <p class="muted-text text-center">Complete onboarding and log activities to reveal your highest impact areas.</p>
+            </div>
+            <button id="dashboard-insights-btn" class="btn btn-primary hidden" style="margin-top: 20px;">Ask AI Coach</button>
+          </div>
+
+          <!-- Emissions Breakdown -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h3>Emissions Breakdown</h3>
+            </div>
+            <div id="breakdown-chart-bars" class="chart-bars" style="flex-grow: 1; overflow-y: auto;">
+              <p class="muted-text text-center" style="margin-top: 40px;">No emissions recorded yet.</p>
             </div>
           </div>
 
-          <!-- Category Breakdown Bar Chart -->
-          <div class="card card-chart">
-            <h3>Emissions Breakdown</h3>
-            <div id="breakdown-chart-bars" class="chart-bars">
-              <!-- Animated bars will be injected here by dashboard.js -->
+          <!-- Activity Status Bar -->
+          <div class="activity-bar">
+            <div class="activity-pill">
+              <span class="activity-pill-title">🚇 Transport</span>
+              <span class="activity-status">Active</span>
+            </div>
+            <div class="activity-pill">
+              <span class="activity-pill-title">🥗 Diet</span>
+              <span class="activity-status">Active</span>
+            </div>
+            <div class="activity-pill">
+              <span class="activity-pill-title">⚡ Energy</span>
+              <span class="activity-status">Active</span>
             </div>
           </div>
+
         </div>
       </section>
 
-      <!-- LOGGER PAGE -->
+      <!-- ═══ LOGGER PAGE ═══ -->
       <section id="page-logger" class="page">
-        <div class="card logger-card">
-          <h2>Log Your Daily Carbon</h2>
-          <p class="tagline">Select a category to capture your actions today:</p>
-          
-          <!-- Category Grid Selection -->
+        <div class="glass-card logger-card">
+          <div class="card-header" style="justify-content: center; flex-direction: column; text-align: center;">
+            <h2 style="font-size: 2rem; margin-bottom: 8px;">Log Activity</h2>
+            <p class="muted-text">Select a category to capture your actions today</p>
+          </div>
+
           <div id="logger-category-grid" class="activity-category-grid">
-            <button class="category-card" data-category="travel" aria-label="Select commute activities">
-              <span class="cat-icon">🛵</span>
+            <button class="category-card" data-category="travel">
+              <span class="cat-icon">🚇</span>
               <span class="cat-label">Travel</span>
             </button>
-            <button class="category-card" data-category="food" aria-label="Select meal activities">
+            <button class="category-card" data-category="food">
               <span class="cat-icon">🥗</span>
               <span class="cat-label">Food</span>
             </button>
-            <button class="category-card" data-category="energy" aria-label="Select hostel energy activities">
+            <button class="category-card" data-category="energy">
               <span class="cat-icon">⚡</span>
               <span class="cat-label">Energy</span>
             </button>
-            <button class="category-card" data-category="shopping" aria-label="Select purchases and deliveries">
+            <button class="category-card" data-category="shopping">
               <span class="cat-icon">🛍️</span>
               <span class="cat-label">Shopping</span>
             </button>
-            <button class="category-card" data-category="flights" aria-label="Select flight transit">
+            <button class="category-card" data-category="flights">
               <span class="cat-icon">✈️</span>
               <span class="cat-label">Flights</span>
             </button>
           </div>
 
-          <!-- Dynamic Form Section -->
-          <div id="logger-form-section" class="logger-form-section hidden">
-            <button id="logger-back-btn" class="btn-back" aria-label="Go back to category selection">← Back to Categories</button>
-            
-            <h3 id="logger-selected-cat-title">Category Title</h3>
-            <div id="logger-activity-type-selection" class="activity-types-container">
-              <!-- Activity buttons injected dynamically -->
-            </div>
+          <div id="logger-form-section" class="hidden" style="animation: fadeUp 0.3s forwards;">
+            <button id="logger-back-btn" style="background:none; border:none; color:var(--primary); font-family:var(--font); font-weight:600; cursor:pointer; margin-bottom: 20px; font-size: 1rem;">← Back</button>
 
-            <!-- Value Input Panel -->
-            <div id="logger-value-input-panel" class="value-input-panel hidden">
+            <h3 id="logger-selected-cat-title" style="margin-bottom: 14px; font-size: 1.4rem;">Category</h3>
+            <div id="logger-activity-type-selection" class="activity-types-container"></div>
+
+            <div id="logger-value-input-panel" class="hidden">
               <div class="form-group">
                 <label id="logger-input-label" for="logger-value-input">Enter Amount</label>
                 <div class="input-with-unit">
-                  <input type="number" id="logger-value-input" min="0" step="any" placeholder="0.0" aria-required="true">
+                  <input type="number" id="logger-value-input" min="0" step="any" placeholder="0.0">
                   <span id="logger-input-unit" class="input-unit">unit</span>
                 </div>
               </div>
 
-              <!-- Client-Side Preview Panel -->
               <div id="logger-preview-panel" class="preview-panel hidden">
                 <div class="preview-header">
                   <span class="preview-title">Emissions Estimate</span>
                   <span id="logger-preview-val" class="preview-val">0.00 kg CO₂</span>
                 </div>
-                <div class="comparison-chips-container" id="logger-comparison-chips">
-                  <!-- Comparison chips injected here -->
-                </div>
+                <div class="comparison-chips-container" id="logger-comparison-chips"></div>
               </div>
 
-              <button id="logger-submit-btn" class="btn btn-primary btn-block" aria-label="Log activity into your daily tracker">Log Activity</button>
+              <button id="logger-submit-btn" class="btn btn-primary btn-block" style="padding: 18px; font-size: 1.1rem;">Log to Footprint</button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- INSIGHTS PAGE -->
+      <!-- ═══ INSIGHTS PAGE ═══ -->
       <section id="page-insights" class="page">
-        <div class="insights-container">
-          <div class="insights-header">
-            <h2>AI Climate Coach</h2>
-            <p class="tagline">Personalized suggestions & explanations powered by CarbonSaathi AI.</p>
+        <div class="dashboard-hero" style="margin-bottom: 20px;">
+          <div class="hero-text">
+            <h2 style="font-size: 2.2rem; margin-bottom: 8px;">AI Climate Coach</h2>
+            <p class="muted-text">Deep analysis &amp; personalized suggestions.</p>
           </div>
+          <div style="display: flex; justify-content: flex-end; align-items: center;">
+            <button id="insights-generate-btn" class="btn btn-glow">Analyze Recent Logs</button>
+          </div>
+        </div>
 
-          <!-- Chat Window -->
-          <div id="insights-chat-window" class="insights-chat-window" role="log" aria-live="polite" aria-label="Chat feed with AI Coach">
-            <!-- Welcome system bubble -->
+        <div class="glass-card" style="padding: 24px;">
+          <div id="insights-chat-window" class="insights-chat-window" role="log" aria-live="polite">
             <div class="chat-bubble coach-bubble">
-              <div class="bubble-content">
-                <p>Welcome! I am CarbonSaathi, your personal AI climate coach. Tap the button below to analyze your logged activities and generate your personal dashboard insights.</p>
-              </div>
+              <p>Welcome to CarbonSaathi Insights! I'm ready to analyze your data.</p>
             </div>
-            
-            <!-- Dynamic chat bubbles injected here -->
           </div>
 
-          <!-- Insight Controls & Question Input -->
-          <div class="insights-controls-panel">
-            <button id="insights-generate-btn" class="btn btn-primary btn-block" aria-label="Run AI diagnostics on current activities">Analyze Logged Activities</button>
-            
-            <form id="insights-chat-form" class="insights-chat-form hidden" aria-label="Ask a question to AI Coach">
-              <div class="input-group">
-                <input type="text" id="insights-user-input" placeholder="Ask about reducing your carbon footprint..." aria-label="Type message to AI Coach" required maxlength="500">
-                <button type="submit" id="insights-send-btn" class="btn-send" aria-label="Send message to AI Coach">➤</button>
-              </div>
-            </form>
-          </div>
+          <form id="insights-chat-form" class="insights-chat-form">
+            <div class="input-group">
+              <input type="text" id="insights-user-input" placeholder="Ask follow-up questions..." required>
+              <button type="submit" id="insights-send-btn" class="btn-send">➤</button>
+            </div>
+          </form>
         </div>
       </section>
 
-      <!-- CHALLENGES PAGE -->
+      <!-- ═══ CHALLENGES PAGE ═══ -->
       <section id="page-challenges" class="page">
-        <div class="card challenges-card">
-          <h2>Weekly Student Challenges</h2>
-          <p class="tagline">Complete micro-challenges to build green habits:</p>
-          
-          <div id="challenges-display-container" class="challenges-display-container">
-            <!-- Active challenge card injected here -->
+        <div class="glass-card challenges-card">
+          <div class="card-header" style="justify-content: center; text-align: center; margin-bottom: 24px; flex-direction: column;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 8px;">Weekly Quests</h2>
+            <p class="muted-text">Turn reductions into a game.</p>
+          </div>
+
+          <div id="challenges-display-container">
+            <!-- Injected by challenges.js -->
           </div>
         </div>
       </section>
 
-      <!-- SIMULATOR PAGE -->
+      <!-- ═══ SIMULATOR PAGE ═══ -->
       <section id="page-simulator" class="page">
-        <div class="card simulator-card">
-          <h2>What-If Lifestyle Simulator</h2>
-          <p class="tagline">Project the impact of swapping habits before making changes:</p>
-          
-          <!-- Scenario Buttons Grid -->
+        <div class="glass-card simulator-card">
+          <div class="card-header" style="justify-content: center; text-align: center; margin-bottom: 24px; flex-direction: column;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 8px;">What-If Simulator</h2>
+            <p class="muted-text">Test hypothetical changes to your lifestyle.</p>
+          </div>
+
           <div id="simulator-scenarios" class="simulator-scenarios-grid">
-            <button class="simulator-scenario-btn" data-scenario="switch_transport" aria-label="Simulate switching transport mode">
+            <button class="simulator-scenario-btn" data-scenario="switch_transport">
               <span class="sim-icon">🚇</span>
-              <span class="sim-label">Switch to Metro</span>
+              <span class="sim-label">Public Transport</span>
             </button>
-            <button class="simulator-scenario-btn" data-scenario="reduce_meat" aria-label="Simulate going vegetarian">
+            <button class="simulator-scenario-btn" data-scenario="reduce_meat">
               <span class="sim-icon">🥗</span>
-              <span class="sim-label">Go Meatless 3x/week</span>
+              <span class="sim-label">Meatless Days</span>
             </button>
-            <button class="simulator-scenario-btn" data-scenario="reduce_ac" aria-label="Simulate reducing AC hours">
+            <button class="simulator-scenario-btn" data-scenario="reduce_ac">
               <span class="sim-icon">❄️</span>
-              <span class="sim-label">Reduce AC by 2hrs</span>
+              <span class="sim-label">Reduce AC</span>
             </button>
-            <button class="simulator-scenario-btn" data-scenario="cycle_instead" aria-label="Simulate cycling short distances">
+            <button class="simulator-scenario-btn" data-scenario="cycle_instead">
               <span class="sim-icon">🚲</span>
-              <span class="sim-label">Cycle Short Distances</span>
+              <span class="sim-label">Cycle Instead</span>
             </button>
           </div>
 
-          <!-- Parameter Panel (Scenario specific parameters) -->
-          <div id="simulator-params-panel" class="simulator-params-panel hidden">
-            <!-- Parameters dynamically loaded -->
+          <div id="simulator-params-panel" class="hidden" style="margin-bottom: 24px; background: rgba(0,0,0,0.2); padding: 24px; border-radius: var(--radius);">
+            <!-- Dynamic parameters -->
           </div>
 
-          <!-- Simulation Output Results -->
-          <div id="simulator-output-panel" class="simulator-output-panel hidden">
-            <hr class="divider">
-            <h3>Simulation Results</h3>
-            
+          <div id="simulator-output-panel" class="hidden">
             <div class="simulator-comparison">
               <div class="sim-compare-col current">
-                <span class="compare-label">Current Monthly</span>
+                <span class="compare-label">Current</span>
                 <span id="sim-current-val" class="compare-val">0.0 kg</span>
               </div>
-              <div class="sim-compare-col arrow">
-                <span>➔</span>
-              </div>
+              <div class="sim-compare-col arrow">➔</div>
               <div class="sim-compare-col proposed">
-                <span class="compare-label">Proposed Monthly</span>
+                <span class="compare-label">Proposed</span>
                 <span id="sim-proposed-val" class="compare-val">0.0 kg</span>
               </div>
             </div>
 
             <div class="sim-savings-highlight">
-              <span>Savings Achieved: </span>
-              <span id="sim-savings-val" class="savings-val">0.0 kg CO₂ / Month (-0.0%)</span>
+              <span>Monthly Savings: </span>
+              <span id="sim-savings-val" class="savings-val">0.0 kg CO₂</span>
             </div>
 
-            <h4>Equivalent Annual Impacts:</h4>
-            <div class="comparison-chips-container" id="sim-comparison-chips">
-              <!-- Equivalents chips injected here -->
-            </div>
+            <h4 style="color: var(--text-muted); margin-bottom: 14px;">Equivalent to:</h4>
+            <div class="comparison-chips-container" id="sim-comparison-chips"></div>
           </div>
         </div>
       </section>
 
-    </div>
-  </main>
+    </main>
+  </div>
 
-  <!-- Load script modules -->
   <script src="js/app.js"></script>
   <script src="js/onboarding.js"></script>
   <script src="js/dashboard.js"></script>

@@ -1,8 +1,8 @@
 # 🌱 CarbonSaathi AI
 > "Small Actions. Lasting Impact."
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](http://localhost:8080)
-[![GitHub](https://img.shields.io/badge/github-repo-blue)](https://github.com/user/carbon-saathi)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://carbon-saathi-158783670898.us-central1.run.app/onboarding)
+[![GitHub](https://img.shields.io/badge/github-repo-blue)](https://github.com/Aryan24a-git/carbon-saathi)
 
 ## The Problem
 Urban Indian college students have a high desire to live sustainably but lack actionable, localized insights due to an awareness gap. Standard carbon calculators use Western benchmarks that fail to reflect Indian lifestyles like hostel living, daily two-wheeler commutes, and college mess diets.
@@ -28,6 +28,21 @@ Rather than relying on non-deterministic and expensive large language model quer
 - **Reliable:** Guarantees carbon calculations match IPCC factors without hallucinations.
 - **Responsible AI:** Gemini is utilized only as a friendly NLP coach to translate the Decision Engine's output into practical, context-aware student advice.
 
+---
+
+## 🎨 Premium UI Design & Aesthetics
+
+CarbonSaathi features a state-of-the-art **Glassmorphism × Claymorphism × CSS 3D Interactive Garden** user interface designed for a high-end, immersive student experience:
+
+*   **Deep Forest Dark Theme**: A premium color scheme with deep forest gradients (`hsl(152, 60%, 4%)` to `hsl(150, 35%, 8%)`) and vibrant emerald accents (`#00FFB2`).
+*   **3D Footprint Background**: A transparent, blurred 3D claymorphism footprint and flora background image (`opacity: 0.22`, `filter: blur(2px)`) that adds visual depth without compromising text readability.
+*   **Ambient Background System**: Three independent floating gradient blobs with custom keyframe animations and high blur (`120px`) providing dynamic, living UI feedback.
+*   **CSS 3D Virtual Garden**: Built using purely lightweight CSS 3D transforms, keyframe sways, and interactive SVG rendering. This replaces heavy 3D rendering engines (like Three.js), resulting in 99% smaller script sizes while maintaining a premium 3D look.
+*   **Glassmorphic Container Cards**: Glass styling leveraging high blur backdrop-filters (`blur(24px)`), thin semi-transparent white borders, and subtle shadow elevations that react dynamically to cursor hover movements.
+*   **Claymorphic Control Elements**: Dual-shadow depth navigation tabs and control buttons with interactive press-down translations (`translateY`).
+
+---
+
 ## Features
 | Feature | Description | How it Personalizes |
 |---|---|---|
@@ -42,29 +57,30 @@ Rather than relying on non-deterministic and expensive large language model quer
   +-------------------------------------------------------------+
   |                   Client (Web Browser)                      |
   |   - UI Pages: Onboarding, Dashboard, Logger, Simulator...   |
+  |   - Glassmorphism UI & CSS 3D SVG Garden                    |
   |   - LocalStorage State Management (cs_state)                |
   +------------------------------+------------------------------+
                                  | HTTP API
                                  v
-  +-------------------------------------------------------------+
-  |                   Node.js Express Server                    |
-  |                                                             |
-  |   +-------------------+  +-------------------------------+  |
-  |   |    API Routers    |  |     Middleware Filters        |  |
-  |   |  - onboarding     |  |  - cors (Origin Restricted)   |  |
-  |   |  - calculate      |  |  - rateLimiter (20 reqs/min)  |  |
-  |   |  - insights       |  |  - express.json (10kb limit)  |  |
-  |   |  - challenges     |  +-------------------------------+  |
-  |   |  - simulator      |                                     |
-  |   +---------+---------+                                     |
-  |             |                                               |
-  |             v                                               |
-  |   +-------------------+  +-------------------------------+  |
-  |   |  Decision Engine  |  |       Gemini AI Coach         |  |
-  |   |  - Deterministic  |  |  - systemInstruction Prompt   |  |
-  |   |  - Challenge/Sim  |  |  - Fallback tip database      |  |
-  |   +-------------------+  +-------------------------------+  |
-  +-------------------------------------------------------------+
+   +-------------------------------------------------------------+
+   |                   Node.js Express Server                    |
+   |                                                             |
+   |   +-------------------+  +-------------------------------+  |
+   |   |    API Routers    |  |     Middleware Filters        |  |
+   |   |  - onboarding     |  |  - cors (Origin Restricted)   |  |
+   |   |  - calculate      |  |  - rateLimiter (20 reqs/min)  |  |
+   |   |  - insights       |  |  - express.json (10kb limit)  |  |
+   |   |  - challenges     |  +-------------------------------+  |
+   |   |  - simulator      |                                     |
+   |   +---------+---------+                                     |
+   |             |                                               |
+   |             v                                               |
+   |   +-------------------+  +-------------------------------+  |
+   |   |  Decision Engine  |  |       Gemini AI Coach         |  |
+   |   |  - Deterministic  |  |  - systemInstruction Prompt   |  |
+   |   |  - Challenge/Sim  |  |  - Fallback tip database      |  |
+   |   +-------------------+  +-------------------------------+  |
+   +-------------------------------------------------------------+
 ```
 
 ## Decision Logic
@@ -98,7 +114,7 @@ The Google Gemini 1.5 Flash model is integrated solely as a natural language tra
 ## Local Setup
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/user/carbon-saathi.git
+   git clone https://github.com/Aryan24a-git/carbon-saathi.git
    cd carbon-saathi
    ```
 2. **Install dependencies:**
@@ -124,8 +140,13 @@ The Google Gemini 1.5 Flash model is integrated solely as a natural language tra
 5. **Run Tests & Coverage:**
    ```bash
    npm test
-   npm run test:coverage
    ```
+
+## Production Deployment
+The application is set up for automated Dockerized deployment on **Google Cloud Run** using Google Cloud Build configurations.
+
+*   **Live App URL**: [https://carbon-saathi-158783670898.us-central1.run.app/onboarding](https://carbon-saathi-158783670898.us-central1.run.app/onboarding)
+*   **Deployment Configuration**: Defined in [cloudbuild.yaml](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/cloudbuild.yaml) and [Dockerfile](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/Dockerfile).
 
 ## Assumptions
 - **Emission Factors:** Based on average IPCC 2023 values localized to Indian conditions.

@@ -148,6 +148,22 @@ The application is set up for automated Dockerized deployment on **Google Cloud 
 *   **Live App URL**: [https://carbon-saathi-158783670898.us-central1.run.app/onboarding](https://carbon-saathi-158783670898.us-central1.run.app/onboarding)
 *   **Deployment Configuration**: Defined in [cloudbuild.yaml](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/cloudbuild.yaml) and [Dockerfile](file:///c:/projects/CarbonSathi%20AI/carbon-saathi/Dockerfile).
 
+## Application Screenshots
+
+Here is a preview of the redesigned CarbonSaathi AI web interface featuring premium Glassmorphism and Claymorphism:
+
+### 1. Interactive Dashboard & Virtual Garden
+![CarbonSaathi Dashboard](public/assets/screenshots/dashboard.png)
+
+### 2. Activity Logger
+![CarbonSaathi Activity Logger](public/assets/screenshots/logger.png)
+
+### 3. Gamified Weekly Quests (Challenges)
+![CarbonSaathi Weekly Quests](public/assets/screenshots/challenges.png)
+
+### 4. What-If Lifestyle Simulator
+![CarbonSaathi What-If Simulator](public/assets/screenshots/simulator.png)
+
 ## Assumptions
 - **Emission Factors:** Based on average IPCC 2023 values localized to Indian conditions.
 - **Indian Electricity Grid:** Utility grid intensity assumed at `0.82 kg CO2/kWh` based on India's coal-heavy energy mix.

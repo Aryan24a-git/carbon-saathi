@@ -85,8 +85,34 @@ router.post('/', async (req, res, next) => {
 
     const decision = analyzeEmissions(breakdown, profile);
 
-    // Step 2: Build Gemini prompt
-    const prompt = `You are CarbonSaathi, a climate coach
+    // Step 2: Build Gemini prompt dynamically
+    let prompt = '';
+    if (sanitizedMessage) {
+      prompt = `You are CarbonSaathi, a friendly and practical climate coach assisting urban Indian college students to understand and reduce their carbon footprint.
+
+CONTEXT:
+- Highest emission category: ${decision.category}
+- Recommended action: ${decision.action}
+- Monthly savings: ${decision.estimatedSavingKg} kg CO2
+- Difficulty: ${decision.difficulty}
+- User profile: commute=${profile.commute}, diet=${profile.diet}
+- Decision Engine logic:
+  - TRAVEL_DOMINANT threshold is 50% (0.50). If travel is >= 50% of footprint, it recommends public transport or combining trips.
+  - FOOD_DOMINANT threshold is 40% (0.40). If food is >= 40%, it recommends plant-based meals.
+  - ENERGY_DOMINANT threshold is 35% (0.35). If energy is >= 35%, it recommends saving AC usage.
+  - FLIGHTS threshold: if any flight emissions exist, it recommends trains for journeys under 500km.
+  - Otherwise, it recommends maintaining current habits ("balanced").
+
+USER'S QUESTION:
+"${sanitizedMessage}"
+
+YOUR TASK:
+1. Directly and accurately answer the USER'S QUESTION in under 120 words.
+2. If they ask about carbon footprint calculations, explain it based on the facts: e.g. scooter/petrol bike factor is 0.092 kg CO2/km, electric car is 0.05 kg CO2/km, petrol car is 0.21 kg CO2/km, cycling is 0 kg CO2/km.
+3. If they ask about what 'analyzeEmissions' returns, explain that it calculates the category percentages of their logged emissions, checks the dominant category using the rules above, and returns a prioritized action plan (e.g. for travel, food, energy, flights, or balanced).
+4. Do NOT give a canned response explaining the DECISION ALREADY MADE if it is irrelevant to their question. Instead, answer their question first, then relate it back to their profile/recommendation if it fits naturally.`;
+    } else {
+      prompt = `You are CarbonSaathi, a climate coach
 for an Indian college student.
 
 DECISION ALREADY MADE (do not change this):
@@ -95,13 +121,13 @@ Recommended action: ${decision.action}
 Estimated monthly saving: ${decision.estimatedSavingKg} kg CO2
 Difficulty: ${decision.difficulty}
 User profile: commute=${profile.commute}, diet=${profile.diet}
-${sanitizedMessage ? 'User question: ' + sanitizedMessage : ''}
 
 Your task: Explain this recommendation in under 
 120 words. Be encouraging, practical, and 
 specific to an Indian college student's lifestyle.
 Use simple language. End with one actionable 
 first step they can take TODAY.`;
+    }
 
     let explanation = '';
     try {

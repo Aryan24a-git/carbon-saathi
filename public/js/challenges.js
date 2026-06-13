@@ -73,11 +73,20 @@ App.Challenges = {
         </p>
 
         <div class="challenge-actions">
-          <button class="btn btn-primary" onclick="App.Challenges.markComplete('${c.id}')" aria-label="Mark challenge ${c.title} as completed">Mark Complete</button>
-          <button class="btn btn-secondary" onclick="App.Challenges.markFailed('${c.id}')" aria-label="Mark challenge ${c.title} as failed">Skip / Fail</button>
+          <button class="btn btn-primary btn-complete" aria-label="Mark challenge ${c.title} as completed">Mark Complete</button>
+          <button class="btn btn-secondary btn-fail" aria-label="Mark challenge ${c.title} as failed">Skip / Fail</button>
         </div>
       </div>
     `);
+
+    const completeBtn = container.querySelector('.btn-complete');
+    const failBtn = container.querySelector('.btn-fail');
+    if (completeBtn) {
+      completeBtn.onclick = () => App.Challenges.markComplete(c.id);
+    }
+    if (failBtn) {
+      failBtn.onclick = () => App.Challenges.markFailed(c.id);
+    }
   },
 
   /**

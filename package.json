@@ -8,7 +8,6 @@
     "@google/generative-ai": "^0.11.0",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
-    "dompurify": "^3.4.10",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-rate-limit": "^7.2.0",
@@ -25,7 +24,9 @@
     "start": "node server/index.js",
     "dev": "node --watch server/index.js",
     "test": "jest --forceExit",
-    "test:coverage": "jest --coverage --forceExit"
+    "test:coverage": "jest --coverage --forceExit",
+    "lint": "eslint server/ tests/ --ext .js",
+    "format": "prettier --check \"server/**/*.js\" \"tests/**/*.js\""
   },
   "jest": {
     "testEnvironment": "node",

@@ -14,7 +14,6 @@ const { TREE_ABSORPTION_KG_PER_DAY } = require('../data/emissionFactors');
  * @param {number} percentage - Category percentage (0 to 100).
  * @param {Object} profile - User profile for personalization.
  * @returns {Object} Decision details including category, action, estimatedSavingKg, difficulty, reasoning, and treeEquivalent.
- * @throws {Error} Never throws.
  * @example
  * const decision = buildDecision('food', 42.5, { diet: 'non-veg' });
  */
@@ -74,7 +73,6 @@ const buildDecision = (category, percentage, profile) => {
  * @param {Object} breakdown - Category breakdown as percentages.
  * @param {Object} profile - User onboarding profile.
  * @returns {Object} Structured decision object.
- * @throws {Error} Never throws.
  * @example
  * const decision = analyzeEmissions({ travel: 0.60, food: 0.20 }, { commute: 'scooter' });
  */

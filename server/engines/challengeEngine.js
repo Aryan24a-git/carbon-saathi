@@ -157,7 +157,6 @@ const CHALLENGES = [
  * @param {string} history.lastChallengeId - ID of the last challenge.
  * @param {boolean} history.completed - Whether the last challenge was completed.
  * @returns {Object} Next challenge along with personalized reasoning.
- * @throws {Error} Never throws.
  * @example
  * const next = getWeeklyChallenge({ commute: 'scooter' }, { lastChallengeId: 'travel_metro_easy', completed: true });
  */
@@ -204,7 +203,6 @@ function getWeeklyChallenge(profile, history) {
  * @param {string} challengeId - The ID of the challenge evaluated.
  * @param {boolean} completed - Whether the user succeeded.
  * @returns {Object} Evaluation details including next challenge, message, savings, and alternative tip.
- * @throws {Error} Never throws.
  * @example
  * const res = evaluateChallenge('travel_metro_easy', true);
  */

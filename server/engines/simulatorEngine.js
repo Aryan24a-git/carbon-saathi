@@ -29,7 +29,6 @@ function getActivityEmissions(activity) {
  * @param {Object} proposedChange - Details of the scenario to simulate.
  * @param {string} proposedChange.scenario - One of 'switch_transport', 'reduce_meat', 'reduce_ac', 'cycle_instead'.
  * @returns {Object} Simulation metrics.
- * @throws {Error} Never throws.
  * @example
  * const res = simulate([{ category: 'travel', activityType: 'scooter_petrol', value: 10 }], { scenario: 'switch_transport', fromMode: 'scooter_petrol', toMode: 'metro' });
  */

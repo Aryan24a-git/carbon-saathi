@@ -32,6 +32,8 @@ Rather than relying on non-deterministic and expensive large language model quer
 - **Reliable:** Guarantees carbon calculations match IPCC factors without hallucinations.
 - **Responsible AI:** Gemini is utilized only as a friendly NLP coach to translate the Decision Engine's output into practical, context-aware student advice.
 
+> **Architecture Rationale:** CarbonSaathi separates deterministic carbon calculations from generative AI explanations. This architecture improves reliability, transparency, and reduces hallucination risk while still providing personalized user guidance. All emission factors, decision thresholds, and simulation math execute locally—Gemini is invoked only after the decision is made, purely for natural language formatting.
+
 ---
 
 ## 🎨 Premium UI Design & Aesthetics
@@ -60,30 +62,46 @@ CarbonSaathi features a state-of-the-art **Glassmorphism × Claymorphism × CSS 
 ```text
   +-------------------------------------------------------------+
   |                   Client (Web Browser)                      |
-  |   - UI Pages: Onboarding, Dashboard, Logger, Simulator...   |
+  |   - Vanilla JS SPA: Onboarding, Dashboard, Logger, etc.    |
+  |   - DOMPurify (bundled client-side) for XSS protection      |
   |   - Glassmorphism UI & CSS 3D SVG Garden                    |
   |   - LocalStorage State Management (cs_state)                |
   +------------------------------+------------------------------+
-                                 | HTTP API
+                                 | HTTP API (JSON)
                                  v
    +-------------------------------------------------------------+
    |                   Node.js Express Server                    |
    |                                                             |
-   |   +-------------------+  +-------------------------------+  |
-   |   |    API Routers    |  |     Middleware Filters        |  |
-   |   |  - onboarding     |  |  - cors (Origin Restricted)   |  |
-   |   |  - calculate      |  |  - rateLimiter (20 reqs/min)  |  |
-   |   |  - insights       |  |  - express.json (10kb limit)  |  |
-   |   |  - challenges     |  +-------------------------------+  |
-   |   |  - simulator      |                                     |
-   |   +---------+---------+                                     |
-   |             |                                               |
-   |             v                                               |
-   |   +-------------------+  +-------------------------------+  |
-   |   |  Decision Engine  |  |       Gemini AI Coach         |  |
-   |   |  - Deterministic  |  |  - systemInstruction Prompt   |  |
-   |   |  - Challenge/Sim  |  |  - Fallback tip database      |  |
-   |   +-------------------+  +-------------------------------+  |
+   |  +-----------+  +----------------------------------------+  |
+   |  | Middleware |  | Helmet CSP, CORS, compression,         |  |
+   |  |           |  | express-rate-limit (20 req/min),        |  |
+   |  |           |  | express.json (10kb limit)               |  |
+   |  +-----------+  +----------------------------------------+  |
+   |        |                                                    |
+   |        v                                                    |
+   |  +-------------------+     Zod Validation + stripHtml()     |
+   |  |    API Routes     |----------------------------------+   |
+   |  | /api/onboarding   |                                  |   |
+   |  | /api/calculate    |                                  |   |
+   |  | /api/insights     |                                  v   |
+   |  | /api/challenges   |  +------------------------------+   |
+   |  | /api/simulator    |  |  Decision Engine (LOCAL)     |   |
+   |  +-------------------+  |  - analyzeEmissions()        |   |
+   |                         |  - getWeeklyChallenge()      |   |
+   |                         |  - simulate()                |   |
+   |                         |  Pure IF/ELSE, IPCC factors   |   |
+   |                         +-------------+----------------+   |
+   |                                       |                    |
+   |                                       v                    |
+   |                         +------------------------------+   |
+   |                         |  Gemini AI Service           |   |
+   |                         |  - Explanation only          |   |
+   |                         |  - 120-word student advice   |   |
+   |                         |  - Fallback: local tip DB    |   |
+   |                         +------------------------------+   |
+   |                                       |                    |
+   |                                       v                    |
+   |                              JSON Response → Client        |
    +-------------------------------------------------------------+
 ```
 
@@ -109,7 +127,7 @@ The Google Gemini 1.5 Flash model is integrated solely as a natural language tra
 | Criterion | Implementation | File/Evidence |
 |---|---|---|
 | **Code Quality** | Structure, readability, maintainability: Zod schema validation, ESLint and Prettier for consistent styling, comprehensive JSDoc on all backend functions, modular architecture, structured JSON logging without \`console.logs\`. | \`server/utils/constants.js\`, \`server/utils/validators.js\`, \`.eslintrc.json\` |
-| **Security** | Safe and responsible implementation: **Strict Helmet CSP** configured to block unauthorized scripts/styles, **DOMPurify** implemented across the SPA to mitigate XSS vulnerabilities in dynamic rendering, **Zod validation** for robust payload checking, CORS origin-locked, 10kb request limit, rate limiting on all routes. | \`server/index.js\`, \`public/js/dompurify.min.js\`, \`server/utils/validators.js\` |
+| **Security** | Safe and responsible implementation: **Strict Helmet CSP** configured to block unauthorized scripts/styles, **DOMPurify** (client-side bundled copy at `public/js/dompurify.min.js`) implemented across the SPA to mitigate XSS vulnerabilities in dynamic rendering, server-side **custom `stripHtml()` sanitizer** for input cleansing, **Zod validation** for robust payload checking, CORS origin-locked, 10kb request limit, rate limiting on all routes. | `server/index.js`, `public/js/dompurify.min.js`, `server/utils/validators.js` |
 | **Efficiency** | Optimal use of resources: **Cache-Control** headers for static assets, **WebP** image optimization, **deferred** script loading, lightweight CSS 3D (no heavy libraries like Three.js), 100% local deterministic calculation logic. | \`server/index.js\`, \`public/index.html\`, \`public/css/style.css\` |
 | **Testing** | Validation of functionality: 83+ backend test cases covering unit logic, router endpoints, Zod schema sanitization, rate limit headers, and AI API fallback. Reaches 85%+ branch and 95%+ line coverage. | \`tests/\` |
 | **Accessibility** | Inclusive and usable design: Semantic HTML structure, \`lang="en"\`, active keyboard skip-links, ARIA progression controls, progressbars, aria-live logs, 48px touch targets, visual focus outlines, strict \`aria-label\` coverage on inputs and interactive elements, and hidden decorative emojis to prevent screen-reader noise. High contrast glassmorphism. | \`public/index.html\`, \`public/css/style.css\` |

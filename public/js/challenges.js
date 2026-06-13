@@ -74,18 +74,23 @@ App.Challenges = {
 
         <div class="challenge-actions">
           <button class="btn btn-primary btn-complete" aria-label="Mark challenge ${c.title} as completed">Mark Complete</button>
-          <button class="btn btn-secondary btn-fail" aria-label="Mark challenge ${c.title} as failed">Skip / Fail</button>
+          <button class="btn btn-secondary btn-skip" aria-label="Mark challenge ${c.title} as failed">Skip / Fail</button>
         </div>
       </div>
     `);
 
     const completeBtn = container.querySelector('.btn-complete');
-    const failBtn = container.querySelector('.btn-fail');
+    const skipBtn = container.querySelector('.btn-skip');
+
     if (completeBtn) {
-      completeBtn.onclick = () => App.Challenges.markComplete(c.id);
+      completeBtn.addEventListener('click', () => {
+        App.Challenges.markComplete(c.id);
+      });
     }
-    if (failBtn) {
-      failBtn.onclick = () => App.Challenges.markFailed(c.id);
+    if (skipBtn) {
+      skipBtn.addEventListener('click', () => {
+        App.Challenges.markFailed(c.id);
+      });
     }
   },
 
@@ -120,9 +125,9 @@ App.Challenges = {
 
       App.Toast.show('Challenge complete! 🎉', 'success');
 
-      // Update challenge references
+      // Update challenge references to indicate the completed challenge history
       App.Challenges.activeChallenge = {
-        id: result.nextChallenge.id,
+        id: challengeId,
         completed: true
       };
 
@@ -159,9 +164,9 @@ App.Challenges = {
 
       App.Toast.show('No worries! Let\'s scale down to standard actions.', 'warning');
 
-      // Update challenge reference to trigger alternative rendering
+      // Update challenge reference to indicate the failed challenge history
       App.Challenges.activeChallenge = {
-        id: result.nextChallenge.id,
+        id: challengeId,
         completed: false
       };
 

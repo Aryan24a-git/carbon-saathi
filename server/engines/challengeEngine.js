@@ -147,6 +147,84 @@ const CHALLENGES = [
     harderAlternativeId: null,
     icon: '👕',
     collegeSpecific: true
+  },
+  {
+    id: 'travel_carpool_easy',
+    category: 'travel',
+    title: 'Carpool Starter',
+    description: 'Commute by carpooling with a classmate once this week instead of going solo.',
+    targetKgSaved: 4,
+    durationDays: 7,
+    difficulty: 'easy',
+    easierAlternativeId: null,
+    harderAlternativeId: 'travel_carpool_medium',
+    icon: '🚗',
+    collegeSpecific: true
+  },
+  {
+    id: 'travel_carpool_medium',
+    category: 'travel',
+    title: 'Ride-Share Habit',
+    description: 'Carpool or ride-share for all commutes this week.',
+    targetKgSaved: 12,
+    durationDays: 7,
+    difficulty: 'medium',
+    easierAlternativeId: 'travel_carpool_easy',
+    harderAlternativeId: null,
+    icon: '👥',
+    collegeSpecific: true
+  },
+  {
+    id: 'food_local_easy',
+    category: 'food',
+    title: 'Local & Seasonal Snack',
+    description: 'Eat a completely local, seasonal snack (like fresh local fruits) instead of packaged food twice this week.',
+    targetKgSaved: 3,
+    durationDays: 7,
+    difficulty: 'easy',
+    easierAlternativeId: null,
+    harderAlternativeId: null,
+    icon: '🍌',
+    collegeSpecific: true
+  },
+  {
+    id: 'energy_unplug_easy',
+    category: 'energy',
+    title: 'Hostel Idle Unplugger',
+    description: 'Unplug all chargers, adapters, and power strips in your room before going to class.',
+    targetKgSaved: 2,
+    durationDays: 7,
+    difficulty: 'easy',
+    easierAlternativeId: null,
+    harderAlternativeId: 'energy_unplug_medium',
+    icon: '🔌',
+    collegeSpecific: true
+  },
+  {
+    id: 'energy_unplug_medium',
+    category: 'energy',
+    title: 'Vampire Draw Slayer',
+    description: 'Ensure all appliances (laptop, study lamp, charger) are fully unplugged every night before sleeping.',
+    targetKgSaved: 5,
+    durationDays: 7,
+    difficulty: 'medium',
+    easierAlternativeId: 'energy_unplug_easy',
+    harderAlternativeId: null,
+    icon: '🦇',
+    collegeSpecific: true
+  },
+  {
+    id: 'shopping_bag_easy',
+    category: 'shopping',
+    title: 'BYO Bag Advocate',
+    description: 'Carry your own reusable cloth bag for all canteen snack runs and grocery shopping this week.',
+    targetKgSaved: 3,
+    durationDays: 7,
+    difficulty: 'easy',
+    easierAlternativeId: null,
+    harderAlternativeId: null,
+    icon: '🛍️',
+    collegeSpecific: true
   }
 ];
 

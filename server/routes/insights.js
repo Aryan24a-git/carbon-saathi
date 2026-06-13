@@ -8,7 +8,7 @@ const router = express.Router();
 const { analyzeEmissions } = require('../engines/decisionEngine');
 const { explainDecision } = require('../services/gemini');
 const { EMISSION_FACTORS } = require('../data/emissionFactors');
-const { validateMessage } = require('../utils/validators');
+const { validateMessage, validateProfile } = require('../utils/validators');
 const tipsDatabase = require('../data/tipsDatabase');
 const AppError = require('../utils/AppError');
 const logger = require('../utils/logger');
@@ -43,9 +43,23 @@ router.post('/', async (req, res, next) => {
 
     const { activities, profile, message } = req.body;
 
-    if (!Array.isArray(activities) || !profile) {
-      throw new AppError('activities (array) and profile (object) are required', 400, 'INVALID_INSIGHTS_REQUEST');
+    if (!Array.isArray(activities)) {
+      throw new AppError(
+        'activities (array) is required',
+        400,
+        'INVALID_INSIGHTS_REQUEST'
+      );
     }
+
+    const profileValidation = validateProfile(profile);
+    if (!profileValidation.valid) {
+      throw new AppError(
+        `Invalid profile context: ${profileValidation.error}`,
+        400,
+        'INVALID_PROFILE_DATA'
+      );
+    }
+    const validatedProfile = profileValidation.profile;
 
     // Optional user message validation
     let sanitizedMessage = '';
@@ -67,7 +81,7 @@ router.post('/', async (req, res, next) => {
       flights: 0
     };
 
-    activities.forEach(act => {
+    activities.forEach((act) => {
       const emissions = getActivityEmissions(act);
       total += emissions;
       if (Object.prototype.hasOwnProperty.call(categorySums, act.category)) {
@@ -83,7 +97,7 @@ router.post('/', async (req, res, next) => {
       flights: total > 0 ? parseFloat((categorySums.flights / total).toFixed(4)) : 0
     };
 
-    const decision = analyzeEmissions(breakdown, profile);
+    const decision = analyzeEmissions(breakdown, validatedProfile);
 
     // Step 2: Build Gemini prompt dynamically
     let prompt = '';
@@ -94,7 +108,7 @@ CONTEXT:
 - Highest emission category: ${decision.category}
 - Recommended action: ${decision.action}
 - Monthly savings: ${decision.estimatedSavingKg} kg CO2
-- User profile: commute=${profile.commute}, diet=${profile.diet}
+- User profile: commute=${validatedProfile.commute}, diet=${validatedProfile.diet}
 - Decision thresholds: Travel >= 50% (0.50), Food >= 40% (0.40), Energy >= 35% (0.35), Flights > 0.
 
 USER'S QUESTION:
@@ -113,7 +127,7 @@ Category: ${decision.category}
 Action: ${decision.action}
 Savings: ${decision.estimatedSavingKg} kg CO2
 Difficulty: ${decision.difficulty}
-User profile: commute=${profile.commute}, diet=${profile.diet}
+User profile: commute=${validatedProfile.commute}, diet=${validatedProfile.diet}
 
 YOUR TASK:
 Explain this recommendation in 1-2 direct sentences (maximum 40 words). Do not use greetings or conversational fluff. Be practical and specific.`;
@@ -124,11 +138,15 @@ Explain this recommendation in 1-2 direct sentences (maximum 40 words). Do not u
       // Step 3: Call Gemini
       explanation = await explainDecision(prompt);
     } catch (geminiError) {
-      logger.warn('Gemini explanation failed or not configured, executing fallback tip compilation', { err: geminiError.message });
+      logger.warn(
+        'Gemini explanation failed or not configured, executing fallback tip compilation',
+        { err: geminiError.message }
+      );
 
       // Step 4: FALLBACK (tipsDatabase explanation)
-      const relevantTips = tipsDatabase.filter(t => t.category === decision.category);
-      const sampleTip = relevantTips[0]?.tip || 'Turn off power sockets when gadgets are not charging.';
+      const relevantTips = tipsDatabase.filter((t) => t.category === decision.category);
+      const sampleTip =
+        relevantTips[0]?.tip || 'Turn off power sockets when gadgets are not charging.';
       const sampleTip2 = relevantTips[1]?.tip || 'Walk or cycle for short transit commutes.';
 
       explanation = `As your CarbonSaathi climate coach, let's analyze your emissions. Since your highest impact source is ${decision.category}, our recommendation is: ${decision.action}. This is a ${decision.difficulty} action that saves about ${decision.estimatedSavingKg} kg CO2. Start today with this tip: ${sampleTip} Or try this: ${sampleTip2} Every small action builds a lasting impact!`;

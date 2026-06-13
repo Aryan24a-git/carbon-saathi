@@ -21,9 +21,10 @@ const buildDecision = (category, percentage, profile) => {
   const displayPercentage = percentage <= 1 ? percentage * 100 : percentage;
   const decisions = {
     travel: {
-      action: profile?.commute === 'scooter'
-        ? 'Replace one scooter commute with metro/bus'
-        : 'Combine trips or use public transport once',
+      action:
+        profile?.commute === 'scooter'
+          ? 'Replace one scooter commute with metro/bus'
+          : 'Combine trips or use public transport once',
       estimatedSavingKg: 8,
       difficulty: 'medium',
       reasoning: `Travel contributes ${displayPercentage.toFixed(0)}% of your emissions. Switching transport mode once weekly saves approximately 8 kg CO2/month.`
@@ -62,9 +63,7 @@ const buildDecision = (category, percentage, profile) => {
     estimatedSavingKg: d.estimatedSavingKg,
     difficulty: d.difficulty,
     reasoning: d.reasoning,
-    treeEquivalent: Math.ceil(
-      d.estimatedSavingKg / TREE_ABSORPTION_KG_PER_DAY
-    )
+    treeEquivalent: Math.ceil(d.estimatedSavingKg / TREE_ABSORPTION_KG_PER_DAY)
   };
 };
 
@@ -83,7 +82,7 @@ const analyzeEmissions = (breakdown, profile) => {
   if (travel >= DECISION_THRESHOLDS.TRAVEL_DOMINANT) {
     return buildDecision('travel', travel, profile);
   }
-  // Rule 2: Food dominant  
+  // Rule 2: Food dominant
   else if (food >= DECISION_THRESHOLDS.FOOD_DOMINANT) {
     return buildDecision('food', food, profile);
   }

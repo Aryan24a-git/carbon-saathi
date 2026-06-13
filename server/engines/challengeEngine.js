@@ -178,7 +178,8 @@ const CHALLENGES = [
     id: 'food_local_easy',
     category: 'food',
     title: 'Local & Seasonal Snack',
-    description: 'Eat a completely local, seasonal snack (like fresh local fruits) instead of packaged food twice this week.',
+    description:
+      'Eat a completely local, seasonal snack (like fresh local fruits) instead of packaged food twice this week.',
     targetKgSaved: 3,
     durationDays: 7,
     difficulty: 'easy',
@@ -191,7 +192,8 @@ const CHALLENGES = [
     id: 'energy_unplug_easy',
     category: 'energy',
     title: 'Hostel Idle Unplugger',
-    description: 'Unplug all chargers, adapters, and power strips in your room before going to class.',
+    description:
+      'Unplug all chargers, adapters, and power strips in your room before going to class.',
     targetKgSaved: 2,
     durationDays: 7,
     difficulty: 'easy',
@@ -204,7 +206,8 @@ const CHALLENGES = [
     id: 'energy_unplug_medium',
     category: 'energy',
     title: 'Vampire Draw Slayer',
-    description: 'Ensure all appliances (laptop, study lamp, charger) are fully unplugged every night before sleeping.',
+    description:
+      'Ensure all appliances (laptop, study lamp, charger) are fully unplugged every night before sleeping.',
     targetKgSaved: 5,
     durationDays: 7,
     difficulty: 'medium',
@@ -217,7 +220,8 @@ const CHALLENGES = [
     id: 'shopping_bag_easy',
     category: 'shopping',
     title: 'BYO Bag Advocate',
-    description: 'Carry your own reusable cloth bag for all canteen snack runs and grocery shopping this week.',
+    description:
+      'Carry your own reusable cloth bag for all canteen snack runs and grocery shopping this week.',
     targetKgSaved: 3,
     durationDays: 7,
     difficulty: 'easy',
@@ -243,15 +247,15 @@ function getWeeklyChallenge(profile, history) {
   let reasoning = 'Based on your profile commute and energy choices.';
 
   if (history && history.lastChallengeId) {
-    const lastChallenge = CHALLENGES.find(c => c.id === history.lastChallengeId);
+    const lastChallenge = CHALLENGES.find((c) => c.id === history.lastChallengeId);
     if (lastChallenge) {
       if (history.completed) {
         const harderId = lastChallenge.harderAlternativeId;
-        challenge = CHALLENGES.find(c => c.id === harderId) || lastChallenge;
+        challenge = CHALLENGES.find((c) => c.id === harderId) || lastChallenge;
         reasoning = `You completed the "${lastChallenge.title}" challenge! We upgraded your difficulty level to keep pushing your limits.`;
       } else {
         const easierId = lastChallenge.easierAlternativeId;
-        challenge = CHALLENGES.find(c => c.id === easierId) || lastChallenge;
+        challenge = CHALLENGES.find((c) => c.id === easierId) || lastChallenge;
         reasoning = `Since "${lastChallenge.title}" was tough to complete, we selected an easier alternative to help you gain momentum.`;
       }
     }
@@ -262,15 +266,19 @@ function getWeeklyChallenge(profile, history) {
     let targetCategory = 'food';
     if (profile?.commute === 'scooter' || profile?.commute === 'car_petrol') {
       targetCategory = 'travel';
-      reasoning = 'Since you commute via personal motorized transport, this transit-focused challenge will have the highest impact.';
+      reasoning =
+        'Since you commute via personal motorized transport, this transit-focused challenge will have the highest impact.';
     } else if (profile?.acUsage === 'often' || profile?.acUsage === 'always') {
       targetCategory = 'energy';
-      reasoning = 'Your high AC usage is a primary source of carbon. Here is an easy challenge to optimize your power use.';
+      reasoning =
+        'Your high AC usage is a primary source of carbon. Here is an easy challenge to optimize your power use.';
     } else {
       reasoning = 'Start your green journey with this easy meal alternative mess challenge.';
     }
 
-    challenge = CHALLENGES.find(c => c.category === targetCategory && c.difficulty === 'easy') || CHALLENGES[0];
+    challenge =
+      CHALLENGES.find((c) => c.category === targetCategory && c.difficulty === 'easy') ||
+      CHALLENGES[0];
   }
 
   return { challenge, reasoning };
@@ -285,7 +293,7 @@ function getWeeklyChallenge(profile, history) {
  * const res = evaluateChallenge('travel_metro_easy', true);
  */
 function evaluateChallenge(challengeId, completed) {
-  const current = CHALLENGES.find(c => c.id === challengeId);
+  const current = CHALLENGES.find((c) => c.id === challengeId);
   if (!current) {
     return {
       next: CHALLENGES[0],
@@ -295,18 +303,19 @@ function evaluateChallenge(challengeId, completed) {
   }
 
   if (completed) {
-    const harder = CHALLENGES.find(c => c.id === current.harderAlternativeId) || current;
+    const harder = CHALLENGES.find((c) => c.id === current.harderAlternativeId) || current;
     return {
       next: harder,
       message: `Awesome job! You successfully completed "${current.title}". You are stepping up your sustainability game. Try this next level!`,
       savingsAchieved: current.targetKgSaved
     };
   } else {
-    const easier = CHALLENGES.find(c => c.id === current.easierAlternativeId) || current;
+    const easier = CHALLENGES.find((c) => c.id === current.easierAlternativeId) || current;
     return {
       next: easier,
-      message: `No worries! Every small step counts. Let's try something a bit more achievable to keep you going.`,
-      alternativeTip: `Try starting with simple actions like unplugging chargers when not in use.`
+      message:
+        "No worries! Every small step counts. Let's try something a bit more achievable to keep you going.",
+      alternativeTip: 'Try starting with simple actions like unplugging chargers when not in use.'
     };
   }
 }

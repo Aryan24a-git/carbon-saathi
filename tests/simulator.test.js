@@ -3,17 +3,15 @@ process.env.NODE_ENV = 'test';
 process.env.ALLOWED_ORIGIN = 'http://localhost:8080';
 
 jest.mock('@google/generative-ai', () => ({
-  GoogleGenerativeAI: jest.fn().mockImplementation(
-    () => ({
-      getGenerativeModel: jest.fn().mockReturnValue({
-        generateContent: jest.fn().mockResolvedValue({
-          response: {
-            text: () => 'Mocked AI explanation response'
-          }
-        })
+  GoogleGenerativeAI: jest.fn().mockImplementation(() => ({
+    getGenerativeModel: jest.fn().mockReturnValue({
+      generateContent: jest.fn().mockResolvedValue({
+        response: {
+          text: () => 'Mocked AI explanation response'
+        }
       })
     })
-  )
+  }))
 }));
 
 const request = require('supertest');
@@ -93,12 +91,10 @@ describe('Simulator Integration Tests', () => {
   });
 
   it('unsupported scenario → 400 error', async () => {
-    const res = await request(app)
-      .post('/api/simulator')
-      .send({
-        currentActivities: mockActivities,
-        scenario: 'invalid_scenario_params'
-      });
+    const res = await request(app).post('/api/simulator').send({
+      currentActivities: mockActivities,
+      scenario: 'invalid_scenario_params'
+    });
     expect(res.status).toBe(400);
   });
 });

@@ -14,13 +14,15 @@
  */
 function info(message, meta = {}) {
   // eslint-disable-next-line no-console
-  console.log(JSON.stringify({
-    timestamp: new Date().toISOString(),
-    level: 'INFO',
-    service: 'carbon-saathi',
-    message,
-    ...meta
-  }));
+  console.log(
+    JSON.stringify({
+      timestamp: new Date().toISOString(),
+      level: 'INFO',
+      service: 'carbon-saathi',
+      message,
+      ...meta
+    })
+  );
 }
 
 /**
@@ -34,13 +36,15 @@ function info(message, meta = {}) {
  */
 function warn(message, meta = {}) {
   // eslint-disable-next-line no-console
-  console.log(JSON.stringify({
-    timestamp: new Date().toISOString(),
-    level: 'WARN',
-    service: 'carbon-saathi',
-    message,
-    ...meta
-  }));
+  console.log(
+    JSON.stringify({
+      timestamp: new Date().toISOString(),
+      level: 'WARN',
+      service: 'carbon-saathi',
+      message,
+      ...meta
+    })
+  );
 }
 
 /**
@@ -54,13 +58,15 @@ function warn(message, meta = {}) {
  */
 function error(message, meta = {}) {
   // eslint-disable-next-line no-console
-  console.error(JSON.stringify({
-    timestamp: new Date().toISOString(),
-    level: 'ERROR',
-    service: 'carbon-saathi',
-    message,
-    ...meta
-  }));
+  console.error(
+    JSON.stringify({
+      timestamp: new Date().toISOString(),
+      level: 'ERROR',
+      service: 'carbon-saathi',
+      message,
+      ...meta
+    })
+  );
 }
 
 module.exports = {

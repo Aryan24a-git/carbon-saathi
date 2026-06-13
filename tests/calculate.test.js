@@ -3,17 +3,15 @@ process.env.NODE_ENV = 'test';
 process.env.ALLOWED_ORIGIN = 'http://localhost:8080';
 
 jest.mock('@google/generative-ai', () => ({
-  GoogleGenerativeAI: jest.fn().mockImplementation(
-    () => ({
-      getGenerativeModel: jest.fn().mockReturnValue({
-        generateContent: jest.fn().mockResolvedValue({
-          response: {
-            text: () => 'Mocked AI explanation response'
-          }
-        })
+  GoogleGenerativeAI: jest.fn().mockImplementation(() => ({
+    getGenerativeModel: jest.fn().mockReturnValue({
+      generateContent: jest.fn().mockResolvedValue({
+        response: {
+          text: () => 'Mocked AI explanation response'
+        }
       })
     })
-  )
+  }))
 }));
 
 const request = require('supertest');
@@ -91,9 +89,7 @@ describe('Calculate Integration Tests', () => {
   });
 
   it('empty body → 400', async () => {
-    const res = await request(app)
-      .post('/api/calculate')
-      .send({});
+    const res = await request(app).post('/api/calculate').send({});
     expect(res.status).toBe(400);
   });
 
@@ -113,9 +109,7 @@ describe('Calculate Integration Tests', () => {
 
   it('POST /api/calculate/batch > 20 items → 400', async () => {
     const list = Array(21).fill({ category: 'travel', activityType: 'metro', value: 5 });
-    const res = await request(app)
-      .post('/api/calculate/batch')
-      .send({ activities: list });
+    const res = await request(app).post('/api/calculate/batch').send({ activities: list });
     expect(res.status).toBe(400);
   });
 
@@ -123,9 +117,7 @@ describe('Calculate Integration Tests', () => {
     const res = await request(app)
       .post('/api/calculate/batch')
       .send({
-        activities: [
-          { category: 'travel', activityType: 'scooter_petrol', value: 10 }
-        ],
+        activities: [{ category: 'travel', activityType: 'scooter_petrol', value: 10 }],
         profile: { commute: 'scooter' }
       });
     expect(res.status).toBe(200);

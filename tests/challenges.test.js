@@ -3,17 +3,15 @@ process.env.NODE_ENV = 'test';
 process.env.ALLOWED_ORIGIN = 'http://localhost:8080';
 
 jest.mock('@google/generative-ai', () => ({
-  GoogleGenerativeAI: jest.fn().mockImplementation(
-    () => ({
-      getGenerativeModel: jest.fn().mockReturnValue({
-        generateContent: jest.fn().mockResolvedValue({
-          response: {
-            text: () => 'Mocked AI explanation response'
-          }
-        })
+  GoogleGenerativeAI: jest.fn().mockImplementation(() => ({
+    getGenerativeModel: jest.fn().mockReturnValue({
+      generateContent: jest.fn().mockResolvedValue({
+        response: {
+          text: () => 'Mocked AI explanation response'
+        }
       })
     })
-  )
+  }))
 }));
 
 const request = require('supertest');

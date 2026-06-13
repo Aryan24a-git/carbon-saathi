@@ -25,7 +25,11 @@ router.get('/current', (req, res, next) => {
       try {
         profile = JSON.parse(req.query.profile);
       } catch (err) {
-        throw new AppError('Invalid JSON structure in profile query parameter', 400, 'INVALID_JSON');
+        throw new AppError(
+          'Invalid JSON structure in profile query parameter',
+          400,
+          'INVALID_JSON'
+        );
       }
     }
 
@@ -33,7 +37,11 @@ router.get('/current', (req, res, next) => {
       try {
         history = JSON.parse(req.query.history);
       } catch (err) {
-        throw new AppError('Invalid JSON structure in history query parameter', 400, 'INVALID_JSON');
+        throw new AppError(
+          'Invalid JSON structure in history query parameter',
+          400,
+          'INVALID_JSON'
+        );
       }
     }
 
@@ -66,7 +74,11 @@ router.post('/evaluate', (req, res, next) => {
     const { challengeId, completed } = req.body;
 
     if (typeof challengeId !== 'string' || typeof completed !== 'boolean') {
-      throw new AppError('challengeId (string) and completed (boolean) are required', 400, 'INVALID_EVALUATION_REQUEST');
+      throw new AppError(
+        'challengeId (string) and completed (boolean) are required',
+        400,
+        'INVALID_EVALUATION_REQUEST'
+      );
     }
 
     const evalResult = evaluateChallenge(challengeId, completed);

@@ -2,27 +2,27 @@ const { analyzeEmissions } = require('../server/engines/decisionEngine');
 
 describe('Decision Engine Unit Tests', () => {
   it('travel=65% → category: "travel" decision', () => {
-    const res = analyzeEmissions({ travel: 0.65, food: 0.20, energy: 0.15 }, { commute: 'scooter' });
+    const res = analyzeEmissions({ travel: 0.65, food: 0.2, energy: 0.15 }, { commute: 'scooter' });
     expect(res.category).toBe('travel');
   });
 
   it('food=45% → category: "food" decision', () => {
-    const res = analyzeEmissions({ travel: 0.10, food: 0.45, energy: 0.45 }, {});
+    const res = analyzeEmissions({ travel: 0.1, food: 0.45, energy: 0.45 }, {});
     expect(res.category).toBe('food');
   });
 
   it('energy=40% → category: "energy" decision', () => {
-    const res = analyzeEmissions({ travel: 0.10, food: 0.10, energy: 0.40 }, {});
+    const res = analyzeEmissions({ travel: 0.1, food: 0.1, energy: 0.4 }, {});
     expect(res.category).toBe('energy');
   });
 
   it('flights=10% → category: "flights" decision', () => {
-    const res = analyzeEmissions({ travel: 0.10, food: 0.10, energy: 0.10, flights: 0.10 }, {});
+    const res = analyzeEmissions({ travel: 0.1, food: 0.1, energy: 0.1, flights: 0.1 }, {});
     expect(res.category).toBe('flights');
   });
 
   it('balanced 20/20/20 → category: "balanced"', () => {
-    const res = analyzeEmissions({ travel: 0.20, food: 0.20, energy: 0.20 }, {});
+    const res = analyzeEmissions({ travel: 0.2, food: 0.2, energy: 0.2 }, {});
     expect(res.category).toBe('balanced');
   });
 
@@ -49,10 +49,10 @@ describe('Decision Engine Unit Tests', () => {
     const categories = ['travel', 'food', 'energy', 'flights', 'balanced'];
     const validDifficulties = ['easy', 'medium', 'hard'];
 
-    categories.forEach(cat => {
+    categories.forEach((cat) => {
       const bd = { travel: 0, food: 0, energy: 0, flights: 0 };
       if (cat !== 'balanced') {
-        bd[cat] = 0.90;
+        bd[cat] = 0.9;
       }
       const res = analyzeEmissions(bd, { commute: 'scooter' });
       expect(validDifficulties).toContain(res.difficulty);

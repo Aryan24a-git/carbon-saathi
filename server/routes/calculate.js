@@ -5,7 +5,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { validateActivity } = require('../utils/validators');
+const { validateActivity, validateProfile } = require('../utils/validators');
 const { EMISSION_FACTORS } = require('../data/emissionFactors');
 const { MAX_ACTIVITIES_BATCH } = require('../utils/constants');
 const { analyzeEmissions } = require('../engines/decisionEngine');
@@ -21,13 +21,21 @@ const logger = require('../utils/logger');
  * @throws {AppError} If category or type is invalid.
  */
 function calculateActivityEmissions(category, type, value) {
-  const catFactors = Object.prototype.hasOwnProperty.call(EMISSION_FACTORS, category) ? EMISSION_FACTORS[category] : null;
+  const catFactors = Object.prototype.hasOwnProperty.call(EMISSION_FACTORS, category)
+    ? EMISSION_FACTORS[category]
+    : null;
   if (!catFactors) {
     throw new AppError(`Invalid emission category: ${category}`, 400, 'INVALID_CATEGORY');
   }
-  const factorInfo = Object.prototype.hasOwnProperty.call(catFactors, type) ? catFactors[type] : null;
+  const factorInfo = Object.prototype.hasOwnProperty.call(catFactors, type)
+    ? catFactors[type]
+    : null;
   if (!factorInfo) {
-    throw new AppError(`Invalid activity type: ${type} for category ${category}`, 400, 'INVALID_ACTIVITY_TYPE');
+    throw new AppError(
+      `Invalid activity type: ${type} for category ${category}`,
+      400,
+      'INVALID_ACTIVITY_TYPE'
+    );
   }
   return value * factorInfo.factor;
 }
@@ -46,7 +54,9 @@ router.post('/', (req, res, next) => {
     }
 
     const { category, activityType, value } = validation.sanitized;
-    const emissions = parseFloat(calculateActivityEmissions(category, activityType, value).toFixed(2));
+    const emissions = parseFloat(
+      calculateActivityEmissions(category, activityType, value).toFixed(2)
+    );
 
     const comparison = {
       trees: Math.ceil(emissions / 0.057),
@@ -82,8 +92,22 @@ router.post('/batch', (req, res, next) => {
       throw new AppError('activities must be an array', 400, 'INVALID_BATCH_DATA');
     }
 
+    const profileValidation = validateProfile(profile);
+    if (!profileValidation.valid) {
+      throw new AppError(
+        `Invalid profile context: ${profileValidation.error}`,
+        400,
+        'INVALID_PROFILE_DATA'
+      );
+    }
+    const validatedProfile = profileValidation.profile;
+
     if (activities.length > MAX_ACTIVITIES_BATCH) {
-      throw new AppError(`Batch size exceeds the limit of ${MAX_ACTIVITIES_BATCH} activities`, 400, 'BATCH_TOO_LARGE');
+      throw new AppError(
+        `Batch size exceeds the limit of ${MAX_ACTIVITIES_BATCH} activities`,
+        400,
+        'BATCH_TOO_LARGE'
+      );
     }
 
     const calculatedActivities = [];
@@ -99,11 +123,17 @@ router.post('/batch', (req, res, next) => {
     for (const act of activities) {
       const validation = validateActivity(act);
       if (!validation.valid) {
-        throw new AppError(`Invalid activity entry: ${validation.error}`, 400, 'INVALID_ACTIVITY_DATA');
+        throw new AppError(
+          `Invalid activity entry: ${validation.error}`,
+          400,
+          'INVALID_ACTIVITY_DATA'
+        );
       }
 
       const { category, activityType, value } = validation.sanitized;
-      const emissions = parseFloat(calculateActivityEmissions(category, activityType, value).toFixed(2));
+      const emissions = parseFloat(
+        calculateActivityEmissions(category, activityType, value).toFixed(2)
+      );
 
       calculatedActivities.push({
         category,
@@ -131,7 +161,7 @@ router.post('/batch', (req, res, next) => {
     };
 
     // Run decision engine
-    const decision = analyzeEmissions(breakdown, profile);
+    const decision = analyzeEmissions(breakdown, validatedProfile);
 
     res.status(200).json({
       activities: calculatedActivities,

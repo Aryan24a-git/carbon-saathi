@@ -44,13 +44,13 @@ router.post('/', (req, res, next) => {
     // Select personalized tips based on the student's highest impact area
     let personalizedTip = 'Try to switch off chargers when leaving your room to save energy.';
     if (profile.commute === 'scooter' || profile.commute === 'car') {
-      const travelTip = tipsDatabase.find(t => t.category === 'travel');
+      const travelTip = tipsDatabase.find((t) => t.category === 'travel');
       if (travelTip) personalizedTip = travelTip.tip;
     } else if (profile.diet.startsWith('nonveg')) {
-      const foodTip = tipsDatabase.find(t => t.category === 'food');
+      const foodTip = tipsDatabase.find((t) => t.category === 'food');
       if (foodTip) personalizedTip = foodTip.tip;
     } else if (profile.acUsage === 'always' || profile.acUsage === 'often') {
-      const energyTip = tipsDatabase.find(t => t.category === 'energy');
+      const energyTip = tipsDatabase.find((t) => t.category === 'energy');
       if (energyTip) personalizedTip = energyTip.tip;
     }
 

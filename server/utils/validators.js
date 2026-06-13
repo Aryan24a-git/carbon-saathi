@@ -38,7 +38,9 @@ function sanitizeHtml(val) {
 }
 
 const activitySchema = z.object({
-  category: z.string().refine(val => VALID_CATEGORIES.includes(val), { message: "Invalid category" }),
+  category: z
+    .string()
+    .refine((val) => VALID_CATEGORIES.includes(val), { message: 'Invalid category' }),
   activityType: z.string().min(1).transform(stripHtml),
   value: z.number().positive()
 });
@@ -49,6 +51,12 @@ const onboardingSchema = z.object({
   acUsage: z.enum(Object.keys(BASELINE_FACTORS.acUsage)),
   recycling: z.boolean(),
   onlineShopping: z.enum(['rarely', 'weekly', 'daily'])
+});
+
+const profileSchema = z.object({
+  commute: z.enum(Object.keys(BASELINE_FACTORS.commute)).optional(),
+  diet: z.enum(Object.keys(BASELINE_FACTORS.diet)).optional(),
+  acUsage: z.enum(Object.keys(BASELINE_FACTORS.acUsage)).optional()
 });
 
 const messageSchema = z.string().min(1).max(MAX_MESSAGE_LENGTH).transform(stripHtml);
@@ -80,6 +88,19 @@ function validateOnboarding(body) {
 }
 
 /**
+ * Validates profile data for calculations/insights requests.
+ */
+function validateProfile(body) {
+  if (!body) return { valid: false, error: 'Profile context is missing' };
+  try {
+    const profile = profileSchema.parse(body);
+    return { valid: true, profile };
+  } catch (err) {
+    return { valid: false, error: err.issues[0].message };
+  }
+}
+
+/**
  * Validates general messages.
  */
 function validateMessage(message) {
@@ -100,8 +121,10 @@ module.exports = {
   sanitizeHtml,
   validateActivity,
   validateOnboarding,
+  validateProfile,
   validateMessage,
   activitySchema,
   onboardingSchema,
+  profileSchema,
   messageSchema
 };

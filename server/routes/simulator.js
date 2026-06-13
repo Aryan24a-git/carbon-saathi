@@ -22,11 +22,19 @@ router.post('/', (req, res, next) => {
     const { currentActivities, scenario, scenarioParams } = req.body;
 
     if (!Array.isArray(currentActivities)) {
-      throw new AppError('currentActivities must be an array of logged activities', 400, 'INVALID_SIMULATOR_REQUEST');
+      throw new AppError(
+        'currentActivities must be an array of logged activities',
+        400,
+        'INVALID_SIMULATOR_REQUEST'
+      );
     }
 
     if (typeof scenario !== 'string' || !SUPPORTED_SCENARIOS.includes(scenario)) {
-      throw new AppError(`Invalid scenario. Supported scenarios: ${SUPPORTED_SCENARIOS.join(', ')}`, 400, 'UNSUPPORTED_SCENARIO');
+      throw new AppError(
+        `Invalid scenario. Supported scenarios: ${SUPPORTED_SCENARIOS.join(', ')}`,
+        400,
+        'UNSUPPORTED_SCENARIO'
+      );
     }
 
     const proposedChange = {

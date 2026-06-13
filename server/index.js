@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV!=='production') require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 /**
  * @fileoverview Main entry point of the CarbonSaathi AI application.
@@ -24,25 +24,29 @@ const AppError = require('./utils/AppError');
 
 const app = express();
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:"]
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:']
+      }
     }
-  }
-}));
+  })
+);
 app.use(compression());
 
 app.set('trust proxy', 1);
 
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGIN || 'http://localhost:8080',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
-}));
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGIN || 'http://localhost:8080',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+  })
+);
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.static(path.join(__dirname, '../public'), { maxAge: '1d' }));
@@ -74,7 +78,7 @@ app.get('*', (req, res) => {
 });
 
 // Global Error Handler (4 params)
-// eslint-disable-next-line no-unused-vars
+
 app.use((err, req, res, next) => {
   logger.error(err.message || 'Unhandled error', { stack: err.stack });
 

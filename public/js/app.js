@@ -23,6 +23,12 @@ const App = {
     App.Storage.load();
     App.setupNavListeners();
 
+    // Bind static page transition buttons to prevent inline CSP violations
+    const logActivityBtn = document.getElementById('dashboard-log-activity-btn');
+    if (logActivityBtn) {
+      logActivityBtn.addEventListener('click', () => App.showPage('logger'));
+    }
+
     if (App.state.profile) {
       App.showNav();
       App.showPage('dashboard');
